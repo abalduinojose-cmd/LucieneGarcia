@@ -63,13 +63,18 @@ export function Hero() {
               {HERO.chipNome}
             </span>
             <span aria-hidden className="h-4 w-px shrink-0 bg-gold/40" />
-            <span className="truncate text-[0.8125rem] text-champagne">
-              {HERO.chipDetalhe}
-              <span className="hidden sm:inline">{` · ${HERO.chipArea}`}</span>
-            </span>
+            <span className="truncate text-[0.8125rem] text-champagne">{HERO.chipDetalhe}</span>
           </p>
 
-          <h1 id="titulo-hero" className="mt-6 text-[clamp(2.6rem,6vw,4.8rem)]">
+          <p
+            className="rise rotulo-caps mt-6 flex items-start gap-3 text-[0.6875rem] leading-relaxed text-gold-light sm:items-center sm:text-[0.75rem]"
+            style={{ animationDelay: "60ms" }}
+          >
+            <span aria-hidden className="traco-desenha mt-[0.55em] h-px w-8 shrink-0 bg-gold sm:mt-0" />
+            {HERO.especialidade}
+          </p>
+
+          <h1 id="titulo-hero" className="mt-4 text-[clamp(2.6rem,6vw,4.8rem)]">
             {`${HERO.titulo} `}
             <span className="marca-texto">{HERO.tituloDestaque}</span>
           </h1>

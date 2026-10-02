@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useId, useRef, useState, type FormEvent, type ReactNode } from "react";
 
 import { Icone } from "@/components/ui/Icone";
@@ -8,7 +7,6 @@ import { IconeWhatsApp } from "@/components/ui/IconeWhatsApp";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { cx } from "@/lib/cx";
-import { FOTOS } from "@/lib/midia";
 import { AGENDAR } from "@/lib/site-config";
 
 const TITULO_ID = "titulo-agendar";
@@ -87,7 +85,7 @@ function Opcoes({ legenda, nome, opcoes, valor, aoMudar, estilo, icones }: Opcoe
 /**
  * Pré-agendamento: o formulário monta a mensagem e abre o WhatsApp da
  * Dra. Luciene já preenchido. Nada é enviado a servidor nem guardado no
- * site. A prévia em balão mostra exatamente o que vai chegar.
+ * site.
  */
 export function PreAgendamento() {
   const id = useId();
@@ -220,28 +218,6 @@ export function PreAgendamento() {
                 placeholder={AGENDAR.campos.mensagemPlaceholder}
                 className="mt-3 w-full resize-none rounded-2xl border border-gold-light/15 bg-ink/60 px-5 py-4 text-[1rem] leading-relaxed text-gold-light outline-none transition duration-300 placeholder:text-champagne/70 focus:border-gold-light focus:bg-ink"
               />
-            </div>
-
-            {/* prévia no balão, como vai chegar no WhatsApp */}
-            <div aria-live="polite" className="rounded-2xl border border-gold-light/10 bg-[#0b141a] p-4">
-              <p className="flex items-center gap-2.5 border-b border-white/5 pb-3">
-                <Image
-                  src={FOTOS.lucieneAvatar}
-                  alt=""
-                  width={28}
-                  height={28}
-                  sizes="28px"
-                  className="size-7 rounded-full object-cover"
-                />
-                <span className="min-w-0 truncate text-[0.8125rem] font-semibold text-[#e9edef]">Dra. Luciene Garcia</span>
-                <span className="ml-auto shrink-0 whitespace-nowrap text-[0.6875rem] text-[#8696a0]">{AGENDAR.previa}</span>
-              </p>
-              <div className="mt-3 flex justify-end">
-                <p className="relative max-w-[92%] whitespace-pre-line rounded-xl rounded-tr-sm bg-[#005c4b] px-3.5 py-2.5 text-[0.8125rem] leading-relaxed text-[#e9edef]">
-                  {texto}
-                  <span className="mt-1 block text-right text-[0.625rem] text-[#a6c7bf]">agora ✓✓</span>
-                </p>
-              </div>
             </div>
 
             <button

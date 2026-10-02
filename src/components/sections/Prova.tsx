@@ -1,30 +1,62 @@
 import { Container } from "@/components/ui/Container";
+import { Icone, type NomeIcone } from "@/components/ui/Icone";
 import { PROVA } from "@/lib/site-config";
 
-/** Faixa de números logo abaixo do hero (a "prova social" do Cabana). */
+function Estrelas() {
+  return (
+    <span role="img" aria-label="5 de 5 estrelas" className="flex gap-0.5 text-gold">
+      {Array.from({ length: 5 }, (_, indice) => (
+        <svg key={indice} viewBox="0 0 24 24" className="size-3" fill="currentColor" aria-hidden focusable="false">
+          <path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9Z" />
+        </svg>
+      ))}
+    </span>
+  );
+}
+
+/**
+ * Faixa de números logo abaixo do hero, em cartões de vidro: ícone, número
+ * grande e leve, rótulo em caixa alta. No celular, 2x2 com espaço entre os
+ * cartões (sem os fios verticais que ficavam desalinhados na segunda linha).
+ */
 export function Prova() {
   return (
-    <section aria-label="Números do escritório" className="bg-ink-soft py-14 md:py-16">
+    <section aria-label="Números do escritório" className="luz bg-ink-soft py-14 md:py-20">
       <Container>
-        <dl className="revelar grid grid-cols-2 gap-y-10 md:grid-cols-4">
-          {PROVA.numeros.map((numero, indice) => (
+        <dl className="escalonar grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">
+          {PROVA.numeros.map((numero) => (
             <div
               key={numero.rotulo}
-              className={
-                indice === 0
-                  ? "flex flex-col-reverse gap-3 px-2 text-center md:px-6"
-                  : "flex flex-col-reverse gap-3 border-l border-gold-light/12 px-2 text-center md:px-6"
-              }
+              className="revelar group relative flex flex-col-reverse overflow-hidden rounded-2xl border border-gold/20 bg-gradient-to-b from-gold-light/[0.06] to-transparent p-5 transition duration-500 ease-serra hover:-translate-y-1 hover:border-gold/45 md:p-7"
             >
-              <dt className="rotulo-caps text-[0.625rem] text-champagne">{numero.rotulo}</dt>
-              <dd className="font-display text-[clamp(2.1rem,3.6vw,3.1rem)] font-light leading-none text-gold-light">
-                {numero.valor}
+              {/* brilho que acende no hover, no canto do ícone */}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute -right-10 -top-10 size-32 rounded-full bg-gold/10 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
+              />
+              <dt className="rotulo-caps mt-2 text-[0.625rem] text-champagne md:text-[0.6875rem]">{numero.rotulo}</dt>
+              <dd className="flex flex-col gap-4">
+                <span
+                  aria-hidden
+                  className="inline-flex size-10 items-center justify-center rounded-full border border-gold/30 bg-gold/10 text-gold-light"
+                >
+                  <Icone nome={numero.icone as NomeIcone} className="size-[1.1rem]" traco={1.5} />
+                </span>
+                <span className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                  <span className="text-[clamp(2.2rem,4vw,3.2rem)] font-light leading-none tracking-[-0.03em] text-gold-light">
+                    {numero.valor}
+                  </span>
+                  {numero.sufixo ? (
+                    <span className="text-[1rem] font-medium text-champagne md:text-[1.125rem]">{numero.sufixo}</span>
+                  ) : null}
+                  {numero.icone === "estrela" ? <Estrelas /> : null}
+                </span>
               </dd>
             </div>
           ))}
         </dl>
 
-        <p className="revelar mx-auto mt-11 flex max-w-3xl items-center justify-center gap-5 text-center text-sm leading-relaxed text-champagne">
+        <p className="revelar mx-auto mt-10 flex max-w-3xl items-center justify-center gap-5 text-center text-sm leading-relaxed text-champagne">
           <span aria-hidden className="hidden h-px flex-1 bg-gold-light/15 sm:block" />
           {PROVA.selo}
           <span aria-hidden className="hidden h-px flex-1 bg-gold-light/15 sm:block" />

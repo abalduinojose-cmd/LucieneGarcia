@@ -142,7 +142,12 @@ export const HERO = {
   /** Chip do topo: foto, nome e a especialidade, como um cartão de visita. */
   chipNome: ADVOGADA.nome,
   chipDetalhe: [ADVOGADA.titulo, ADVOGADA.oab].filter(Boolean).join(" · "),
-  chipArea: "Inventários e Sucessões",
+  /**
+   * Linha de especialidade, pedida pelo usuário em 02/10. ATENÇÃO OAB: o
+   * Código de Ética só admite "especialista" com título de especialização
+   * na área. Sem o título, trocar por "Atuação em Inventários e ...".
+   */
+  especialidade: "Especialista em Inventários e Planejamento Sucessório da Família",
   titulo: "Inventário sem que sua família precise atravessar isso",
   tituloDestaque: "sozinha",
   /** Abertura em duas vozes: a frase-chave em destaque e o apoio mais leve. */
@@ -258,10 +263,10 @@ export const SOBRE = {
 /** Faixa de números logo abaixo do hero. Todos verificáveis no Google. */
 export const PROVA = {
   numeros: [
-    { valor: "5,0", rotulo: "Nota no Google" },
-    { valor: "160", rotulo: "Avaliações no Google" },
-    { valor: "+10 anos", rotulo: "De advocacia" },
-    { valor: "Brasil", rotulo: "Atendimento online" },
+    { icone: "estrela", valor: "5,0", sufixo: "", rotulo: "Nota no Google" },
+    { icone: "conversa", valor: "160", sufixo: "", rotulo: "Avaliações no Google" },
+    { icone: "relogio", valor: "+10", sufixo: "anos", rotulo: "De advocacia" },
+    { icone: "online", valor: "Brasil", sufixo: "", rotulo: "Atendimento online" },
   ],
   selo: "Atendimento presencial em Resende-RJ e online para famílias de todo o país.",
 } as const;
@@ -703,7 +708,6 @@ export const AGENDAR = {
   ],
   formatos: ["Presencial em Resende-RJ", "Online por videochamada"],
   periodos: ["Manhã", "Tarde", "Tanto faz"],
-  previa: "Prévia da mensagem",
   enviar: "Enviar pelo WhatsApp",
   /** Monta o texto que vai para o WhatsApp. O detalhe só entra se escrito. */
   mensagem(dados: {

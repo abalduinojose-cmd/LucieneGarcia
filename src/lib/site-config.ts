@@ -141,7 +141,7 @@ export const ACOES = {
 export const HERO = {
   /** Chip do topo: foto, nome e a especialidade, como um cartão de visita. */
   chipNome: ADVOGADA.nome,
-  chipDetalhe: [ADVOGADA.titulo, ADVOGADA.oab].filter(Boolean).join(" · "),
+  chipDetalhe: [ADVOGADA.titulo, ADVOGADA.oab, "Resende-RJ"].filter(Boolean).join(" · "),
   /**
    * Linha de especialidade, pedida pelo usuário em 02/10. ATENÇÃO OAB: o
    * Código de Ética só admite "especialista" com título de especialização

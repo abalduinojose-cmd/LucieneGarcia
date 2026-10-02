@@ -5,47 +5,59 @@ import { FOTOS } from "@/lib/midia";
 import { FRASE } from "@/lib/site-config";
 
 /**
- * Full-bleed poético (o "mar de nuvens" do Cabana): a frase em serifa
- * itálica sobre a foto, e embaixo trechos reais das avaliações do Google.
+ * Full-bleed poético (o "mar de nuvens" do Cabana) com a foto da Justiça.
+ *
+ * A foto aparece como foi enviada: sem parallax (o scale do parallax ampliava
+ * e borrava), sem véu escuro por cima de tudo e em qualidade 90. No desktop
+ * ela ocupa a seção inteira e o texto fica à esquerda, onde a própria foto já
+ * é escura. No celular ela vem em cima, inteira na largura e enquadrada na
+ * estátua, e o texto vem embaixo: antes o recorte vertical ampliava a imagem
+ * ~3x (borrada) e a frase ficava em cima da estátua.
  */
 export function Frase() {
   return (
     <section
       aria-label={FRASE.poetico}
-      className="relative isolate flex min-h-[72svh] items-end overflow-hidden py-16 md:min-h-[80svh]"
+      className="relative isolate overflow-hidden bg-ink md:flex md:min-h-[82svh] md:items-end md:py-20"
     >
-      <Image
-        src={FOTOS.justica}
-        alt={FRASE.fotoAlt}
-        fill
-        placeholder="blur"
-        sizes="100vw"
-        className="deriva-foto -z-20 object-cover object-[68%_center]"
-      />
-      <div aria-hidden className="veu-foto absolute inset-0 -z-10" />
-      <div aria-hidden className="absolute inset-y-0 left-0 -z-10 w-full bg-gradient-to-r from-ink/85 via-ink/45 to-transparent md:w-3/4" />
-      {/* pontes: as seções vizinhas vazam na foto e o corte some */}
-      <div aria-hidden className="ponte-topo-ink absolute inset-x-0 top-0 -z-10 h-28 md:h-36" />
-      <div aria-hidden className="ponte-base-ink absolute inset-x-0 bottom-0 -z-10 h-24 md:h-32" />
+      <div className="relative aspect-[4/3] w-full md:absolute md:inset-0 md:-z-20 md:aspect-auto">
+        <Image
+          src={FOTOS.justica}
+          alt={FRASE.fotoAlt}
+          fill
+          quality={90}
+          placeholder="blur"
+          sizes="(max-width: 767px) 135vw, 100vw"
+          className="object-cover object-[74%_center] md:object-[center_42%]"
+        />
+        {/* bordas que se fundem no preto das seções vizinhas */}
+        <div aria-hidden className="ponte-topo-ink absolute inset-x-0 top-0 h-6 md:h-28" />
+        <div aria-hidden className="ponte-base-ink absolute inset-x-0 bottom-0 h-1/3 md:h-40" />
+        {/* só no desktop: sombra lateral onde o texto fica, o resto da foto limpo */}
+        <div
+          aria-hidden
+          className="absolute inset-0 hidden bg-[linear-gradient(90deg,rgb(0_0_0/0.88)_0%,rgb(0_0_0/0.6)_32%,rgb(0_0_0/0)_58%)] md:block"
+        />
+      </div>
 
-      <Container>
-        <div className="revelar max-w-3xl">
-          <p className="poetico text-[clamp(2rem,4.6vw,3.4rem)] leading-[1.1] text-gold-light">{FRASE.poetico}</p>
-          <p className="poetico mt-3 text-[clamp(1.4rem,3vw,2.2rem)] leading-snug">
+      <Container className="relative -mt-6 pb-16 md:mt-0 md:pb-0">
+        <div className="revelar max-w-[40rem]">
+          <p className="poetico text-[clamp(2rem,4.4vw,3.3rem)] leading-[1.1] text-gold-light">{FRASE.poetico}</p>
+          <p className="poetico mt-3 text-[clamp(1.35rem,2.6vw,2rem)] leading-snug">
             <span className="marca-texto">{FRASE.apoio}</span>
           </p>
         </div>
 
-        <div className="revelar">
-          <ul className="mt-10 flex flex-wrap gap-x-10 gap-y-4 border-t border-gold-light/20 pt-6">
+        <div className="revelar max-w-[40rem]">
+          <ul className="mt-9 grid gap-4 border-t border-gold-light/20 pt-6">
             {FRASE.citacoes.map((citacao) => (
-              <li key={citacao.autor} className="flex flex-col">
-                <q className="font-display text-[1.35rem] italic text-gold-light">{citacao.texto}</q>
-                <span className="mt-1 text-sm text-champagne">{citacao.autor}</span>
+              <li key={citacao.autor} className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
+                <q className="font-display text-[1.2rem] italic text-gold-light">{citacao.texto}</q>
+                <span className="text-sm text-champagne">{citacao.autor}</span>
               </li>
             ))}
           </ul>
-          <p className="mt-3 text-xs text-champagne">{FRASE.nota}</p>
+          <p className="mt-4 text-xs text-champagne">{FRASE.nota}</p>
         </div>
       </Container>
     </section>

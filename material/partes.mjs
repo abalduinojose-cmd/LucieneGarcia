@@ -15,6 +15,10 @@ for (const [nome, largura, altura] of [["desktop", 1440, 900], ["celular", 390, 
     const el = await pagina.$(seletor);
     if (!el) { console.log("não achou", seletor); continue; }
     await el.scrollIntoView();
+    // espera as imagens da seção terminarem (o dev gera a variante grande na hora)
+    await pagina
+      .waitForFunction((n) => [...n.querySelectorAll("img")].every((i) => i.complete && i.naturalWidth > 0), { timeout: 60000 }, el)
+      .catch(() => console.log("imagens ainda carregando em", seletor));
     await new Promise((r) => setTimeout(r, 400));
     await el.screenshot({ path: `${SAIDA}/${nome}-parte${i}.png` });
   }

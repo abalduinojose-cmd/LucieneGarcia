@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import { Button } from "@/components/ui/Button";
 import { Icone } from "@/components/ui/Icone";
+import { LogoMarca } from "@/components/ui/Logo";
 import { FOTOS } from "@/lib/midia";
 import { HERO, whatsapp } from "@/lib/site-config";
 
@@ -49,21 +50,18 @@ export function Hero() {
 
       <div className="container-page flex flex-1 items-end pb-12 pt-[46svh] md:pb-16 md:pt-32">
         <div className="max-w-2xl">
-          {/* cartão de visita: foto, nome e a especialidade numa pílula de vidro */}
-          <p className="rise inline-flex max-w-full items-center gap-3 rounded-full border border-gold/30 bg-gold-light/[0.06] py-1.5 pl-1.5 pr-4 backdrop-blur-md">
-            <Image
-              src={FOTOS.lucieneAvatar}
-              alt=""
-              width={32}
-              height={32}
-              sizes="32px"
-              className="size-8 shrink-0 rounded-full object-cover ring-1 ring-gold/60"
-            />
-            <span className="whitespace-nowrap text-[0.875rem] font-semibold tracking-[-0.01em] text-gold-light">
-              {HERO.chipNome}
+          {/* cartão de visita: o monograma LG dourado num círculo preto, o nome e a cidade, numa
+              pílula de vidro com fio dourado e um brilho de luz no topo */}
+          <p className="rise inline-flex max-w-full items-center gap-3 rounded-full border border-gold/35 bg-[linear-gradient(110deg,rgb(234_216_175/0.10),rgb(234_216_175/0.02))] py-1.5 pl-1.5 pr-5 shadow-[inset_0_1px_0_rgb(234_216_175/0.14),0_10px_30px_-18px_rgb(164_129_61/0.6)] backdrop-blur-md">
+            <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-full border border-gold/60 bg-ink shadow-[0_0_0_3px_rgb(164_129_61/0.12)]">
+              <LogoMarca className="h-6" />
             </span>
-            <span aria-hidden className="h-4 w-px shrink-0 bg-gold/40" />
-            <span className="truncate text-[0.8125rem] text-champagne">{HERO.chipDetalhe}</span>
+            <span className="flex min-w-0 flex-col leading-tight">
+              <span className="whitespace-nowrap text-[0.9375rem] font-semibold tracking-[-0.01em] text-gold-light">
+                {HERO.chipNome}
+              </span>
+              <span className="truncate text-[0.75rem] text-champagne">{HERO.chipDetalhe}</span>
+            </span>
           </p>
 
           <p

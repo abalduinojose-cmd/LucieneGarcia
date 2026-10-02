@@ -75,7 +75,7 @@ function CardArea({ area, destaque }: { readonly area: Area; readonly destaque: 
 export function Areas() {
   return (
     <Section id={AREAS.id} tom="soft" labelledBy={TITULO_ID}>
-      <SectionHeading id={TITULO_ID} numero="02" rotulo={AREAS.rotulo} titulo={AREAS.titulo} lead={AREAS.lead} className="max-w-3xl" />
+      <SectionHeading id={TITULO_ID} rotulo={AREAS.rotulo} titulo={AREAS.titulo} lead={AREAS.lead} className="max-w-3xl" />
 
       <ul className="escalonar mt-12 grid gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-3">
         {AREAS.itens.map((area, indice) => (

@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import { Button } from "@/components/ui/Button";
+import { Icone } from "@/components/ui/Icone";
 import { FOTOS } from "@/lib/midia";
 import { HERO, whatsapp } from "@/lib/site-config";
 
@@ -48,9 +49,24 @@ export function Hero() {
 
       <div className="container-page flex flex-1 items-end pb-12 pt-[46svh] md:pb-16 md:pt-32">
         <div className="max-w-2xl">
-          <p className="rise rotulo-caps flex items-center gap-3 text-[0.625rem] text-gold-light sm:text-[0.7rem]">
-            <span aria-hidden className="traco-desenha h-px w-9 bg-gold" />
-            {HERO.rotulo}
+          {/* cartão de visita: foto, nome e a especialidade numa pílula de vidro */}
+          <p className="rise inline-flex max-w-full items-center gap-3 rounded-full border border-gold/30 bg-gold-light/[0.06] py-1.5 pl-1.5 pr-4 backdrop-blur-md">
+            <Image
+              src={FOTOS.lucieneAvatar}
+              alt=""
+              width={32}
+              height={32}
+              sizes="32px"
+              className="size-8 shrink-0 rounded-full object-cover ring-1 ring-gold/60"
+            />
+            <span className="whitespace-nowrap text-[0.875rem] font-semibold tracking-[-0.01em] text-gold-light">
+              {HERO.chipNome}
+            </span>
+            <span aria-hidden className="h-4 w-px shrink-0 bg-gold/40" />
+            <span className="truncate text-[0.8125rem] text-champagne">
+              {HERO.chipDetalhe}
+              <span className="hidden sm:inline">{` · ${HERO.chipArea}`}</span>
+            </span>
           </p>
 
           <h1 id="titulo-hero" className="mt-6 text-[clamp(2.6rem,6vw,4.8rem)]">
@@ -59,9 +75,10 @@ export function Hero() {
           </h1>
 
           <p
-            className="rise mt-6 max-w-[52ch] text-[1.0625rem] leading-relaxed text-gold-light/90 md:text-lg"
+            className="rise mt-6 max-w-[46ch] text-[1.0625rem] leading-relaxed text-champagne md:text-lg"
             style={{ animationDelay: "160ms" }}
           >
+            <span className="font-semibold text-gold-light">{HERO.subtituloDestaque}</span>{" "}
             {HERO.subtitulo}
           </p>
 
@@ -79,12 +96,27 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="rise border-t border-gold-light/15 bg-ink/40 backdrop-blur-sm" style={{ animationDelay: "360ms" }}>
-        <ul className="container-page flex flex-wrap items-center justify-center gap-x-6 gap-y-2 py-4 text-center md:gap-x-12 md:py-5">
-          {HERO.selos.map((selo) => (
-            <li key={selo} className="rotulo-caps flex items-center gap-2.5 text-[0.625rem] text-gold-light/90 sm:text-[0.7rem]">
-              <span aria-hidden className="size-1 rounded-full bg-gold" />
-              {selo}
+      {/* faixa de selos: ícone + dado forte + complemento, em vidro */}
+      <div className="rise border-t border-gold-light/12 bg-ink/50 backdrop-blur-md" style={{ animationDelay: "360ms" }}>
+        <ul className="container-page grid grid-cols-2 gap-x-4 gap-y-4 py-5 md:grid-cols-4 md:gap-x-0 md:py-6">
+          {HERO.selos.map((selo, indice) => (
+            <li
+              key={selo.valor}
+              className={`flex items-center gap-3 md:justify-center md:px-4 ${indice > 0 ? "md:border-l md:border-gold-light/10" : ""}`}
+            >
+              <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-full border border-gold/30 bg-gold/10 text-gold-light">
+                {selo.icone === "estrela" ? (
+                  <svg viewBox="0 0 24 24" className="size-[1.1rem] text-gold" fill="currentColor" aria-hidden focusable="false">
+                    <path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9Z" />
+                  </svg>
+                ) : (
+                  <Icone nome={selo.icone} className="size-[1.1rem]" traco={1.5} />
+                )}
+              </span>
+              <span className="min-w-0 leading-tight">
+                <span className="block text-[0.9375rem] font-semibold tracking-[-0.01em] text-gold-light">{selo.valor}</span>
+                <span className="mt-0.5 block text-[0.75rem] text-champagne">{selo.detalhe}</span>
+              </span>
             </li>
           ))}
         </ul>

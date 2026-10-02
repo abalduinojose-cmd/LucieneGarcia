@@ -11,7 +11,7 @@ const TITULO_ID = "titulo-escritorio";
 export function Escritorio() {
   return (
     <Section id={ESCRITORIO.id} labelledBy={TITULO_ID}>
-      <SectionHeading id={TITULO_ID} numero="05" rotulo={ESCRITORIO.rotulo} titulo={ESCRITORIO.titulo} lead={ESCRITORIO.lead} className="max-w-3xl" />
+      <SectionHeading id={TITULO_ID} rotulo={ESCRITORIO.rotulo} titulo={ESCRITORIO.titulo} lead={ESCRITORIO.lead} className="max-w-3xl" />
 
       <div className="mt-12 grid gap-10 lg:grid-cols-2 lg:gap-14">
         <figure className="revelar">

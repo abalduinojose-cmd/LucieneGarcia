@@ -13,7 +13,7 @@ const TITULO_ID = "titulo-videos";
 export function Videos() {
   return (
     <Section id={VIDEOS.id} labelledBy={TITULO_ID}>
-      <SectionHeading id={TITULO_ID} numero="03" rotulo={VIDEOS.rotulo} titulo={VIDEOS.titulo} lead={VIDEOS.lead} className="max-w-2xl" />
+      <SectionHeading id={TITULO_ID} rotulo={VIDEOS.rotulo} titulo={VIDEOS.titulo} lead={VIDEOS.lead} className="max-w-2xl" />
 
       <div className="mt-12 grid gap-8 lg:grid-cols-12 lg:items-center lg:gap-12">
         <ul className="escalonar scrollbar-none relative -mx-4 flex snap-x snap-proximity gap-4 overflow-x-auto px-4 pb-2 sm:gap-5 lg:col-span-8 lg:mx-0 lg:grid lg:grid-cols-3 lg:overflow-visible lg:px-0">

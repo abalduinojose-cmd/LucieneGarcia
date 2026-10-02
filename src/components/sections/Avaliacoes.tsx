@@ -42,7 +42,7 @@ function Louro({ espelhado = false }: { readonly espelhado?: boolean }) {
 export function Avaliacoes() {
   return (
     <Section id={AVALIACOES.id} tom="soft" labelledBy={TITULO_ID}>
-      <SectionHeading id={TITULO_ID} numero="04" rotulo={AVALIACOES.rotulo} titulo={AVALIACOES.titulo} />
+      <SectionHeading id={TITULO_ID} rotulo={AVALIACOES.rotulo} titulo={AVALIACOES.titulo} />
 
       <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:gap-14">
         <div className="revelar lg:col-span-4">

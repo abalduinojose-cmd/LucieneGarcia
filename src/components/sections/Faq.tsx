@@ -12,10 +12,10 @@ const TITULO_ID = "titulo-perguntas";
  */
 export function Faq() {
   return (
-    <Section id={PERGUNTAS.id} labelledBy={TITULO_ID}>
+    <Section id={PERGUNTAS.id} tom="soft" labelledBy={TITULO_ID}>
       <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-5">
-          <SectionHeading id={TITULO_ID} numero="07" rotulo={PERGUNTAS.rotulo} titulo={PERGUNTAS.titulo} lead={PERGUNTAS.lead} />
+          <SectionHeading id={TITULO_ID} rotulo={PERGUNTAS.rotulo} titulo={PERGUNTAS.titulo} lead={PERGUNTAS.lead} />
           <Button href={whatsapp("perguntas")} variante="contorno" whatsapp className="revelar mt-8">
             {PERGUNTAS.cta}
           </Button>

@@ -10,6 +10,7 @@ import type { StaticImageData } from "next/image";
 import retratoSobre from "@/assets/fotos/retrato-sobre.jpg";
 import justica from "@/assets/fotos/justica.jpg";
 import lucieneEstudio from "@/assets/fotos/luciene-estudio.jpg";
+import lucieneAvatar from "@/assets/fotos/luciene-avatar.jpg";
 import mapaEscritorio from "@/assets/mapa/escritorio.jpg";
 import cafeJuridico from "@/assets/fotos/cafe-juridico.jpg";
 import posterPerda from "@/assets/videos/perda.jpg";
@@ -33,7 +34,7 @@ import tatianeRibeiro from "@/assets/avaliacoes/tatiane-ribeiro.jpg";
 import wilclanLeal from "@/assets/avaliacoes/wilclan-leal.jpg";
 import type { Video } from "@/lib/site-config";
 
-export const FOTOS = { retratoSobre, justica, lucieneEstudio, mapaEscritorio, cafeJuridico } as const;
+export const FOTOS = { retratoSobre, justica, lucieneEstudio, lucieneAvatar, mapaEscritorio, cafeJuridico } as const;
 
 export const POSTERS: Record<Video["slug"], StaticImageData> = {
   perda: posterPerda,

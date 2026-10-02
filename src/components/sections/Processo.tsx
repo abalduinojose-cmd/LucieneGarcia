@@ -14,7 +14,7 @@ export function Processo() {
     <Section id={PROCESSO.id} tom="soft" labelledBy={TITULO_ID}>
       <SectionHeading
         id={TITULO_ID}
-        numero="06"
+       
         rotulo={PROCESSO.rotulo}
         titulo={PROCESSO.titulo}
         lead={PROCESSO.lead}

@@ -29,7 +29,7 @@ export function Contato() {
       />
       <div aria-hidden className="absolute inset-0 -z-10 bg-ink/70" />
       <div aria-hidden className="veu-foto absolute inset-0 -z-10" />
-      <div aria-hidden className="ponte-topo-ink absolute inset-x-0 top-0 -z-10 h-28 md:h-36" />
+      <div aria-hidden className="ponte-topo-soft absolute inset-x-0 top-0 -z-10 h-28 md:h-36" />
       <div aria-hidden className="ponte-base-ink absolute inset-x-0 bottom-0 -z-10 h-44 md:h-64" />
 
       <Container>

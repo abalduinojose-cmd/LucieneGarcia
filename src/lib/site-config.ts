@@ -27,6 +27,7 @@ export type Origem =
   | "inventario"
   | "perguntas"
   | "contato"
+  | "agendar"
   | "fixo";
 
 const WHATSAPP_NUMERO = "5524974021292";
@@ -41,6 +42,7 @@ const MENSAGENS: Record<Origem, string> = {
   inventario: `${SAUDACAO}, li como funciona o inventário e gostaria de entender o meu caso.`,
   perguntas: `${SAUDACAO} e tenho uma dúvida que não encontrei nas perguntas frequentes.`,
   contato: `${SAUDACAO} e gostaria de agendar um atendimento.`,
+  agendar: `${SAUDACAO} e gostaria de pré-agendar uma conversa.`,
   fixo: `${SAUDACAO} e gostaria de conversar sobre o meu caso.`,
 };
 
@@ -115,7 +117,7 @@ export const NAV = [
   { href: "#avaliacoes", rotulo: "Avaliações" },
   { href: "#inventario", rotulo: "Inventário" },
   { href: "#perguntas", rotulo: "Dúvidas" },
-  { href: "#contato", rotulo: "Contato" },
+  { href: "#agendar", rotulo: "Agendar" },
 ] as const;
 
 export const A11Y = {
@@ -137,19 +139,24 @@ export const ACOES = {
 } as const;
 
 export const HERO = {
-  rotulo: [ADVOGADA.nome, ADVOGADA.titulo, ADVOGADA.oab].filter(Boolean).join(" · "),
+  /** Chip do topo: foto, nome e a especialidade, como um cartão de visita. */
+  chipNome: ADVOGADA.nome,
+  chipDetalhe: [ADVOGADA.titulo, ADVOGADA.oab].filter(Boolean).join(" · "),
+  chipArea: "Inventários e Sucessões",
   titulo: "Inventário sem que sua família precise atravessar isso",
   tituloDestaque: "sozinha",
-  subtitulo:
-    "Depois de uma perda, a burocracia não precisa ser mais um peso. Eu explico cada etapa do inventário com calma e em linguagem simples, para que vocês decidam com segurança.",
+  /** Abertura em duas vozes: a frase-chave em destaque e o apoio mais leve. */
+  subtituloDestaque: "Do primeiro contato à partilha, sem complicação.",
+  subtitulo: "Cada etapa do inventário explicada em linguagem simples, para a sua família decidir com calma e segurança.",
   local: CONTATO.atendimento,
   cta: "Conversar sobre o inventário",
   ctaSecundario: "Entender como funciona",
+  /** Faixa do pé do hero: um dado forte + um complemento curto, com ícone. */
   selos: [
-    "5,0 · 160 avaliações no Google",
-    ADVOGADA.experiencia,
-    "Presencial em Resende-RJ",
-    "Online em todo o Brasil",
+    { icone: "estrela", valor: "5,0 no Google", detalhe: "160 avaliações" },
+    { icone: "relogio", valor: "+10 anos", detalhe: "de advocacia" },
+    { icone: "local", valor: "Presencial", detalhe: "em Resende-RJ" },
+    { icone: "online", valor: "Online", detalhe: "em todo o Brasil" },
   ],
   retratoAlt: "Retrato da advogada Luciene Garcia",
 } as const;
@@ -233,7 +240,7 @@ export const SOBRE = {
   id: "sobre",
   rotulo: "Sobre a advogada",
   titulo: "Escuta antes de qualquer orientação",
-  frase: "Quem procura um inventário quase sempre está de luto. O primeiro passo é ouvir.",
+  frase: "Por trás de todo inventário existe uma família. O primeiro passo é ouvir.",
   paragrafos: [
     `Sou Luciene Garcia, advogada há mais de 10 anos. Atendo em Resende-RJ e, de forma online, famílias de todo o Brasil. Ao longo desse tempo, aprendi que um inventário não é só um processo: é uma família tentando se reorganizar depois de uma perda.`,
     `Por isso o atendimento começa com uma conversa sem pressa. Explico o que a lei prevê, quais são os caminhos possíveis e o que cada um exige, para que as decisões sejam tomadas com informação e tranquilidade.`,
@@ -654,7 +661,70 @@ export const FINAL = {
   fotoAlt: "Luciene Garcia em conversa no Café Jurídico, em Resende",
 } as const;
 
-export const FIXO = {
-  selo: "★ 5,0 · 160 avaliações",
-  rotulo: "Conversar no WhatsApp",
+export const FLUTUANTE = {
+  rotulo: "Conversar com a Dra. Luciene pelo WhatsApp",
+  dica: "Fale com a Dra. Luciene",
+} as const;
+
+/** Pré-agendamento: o formulário monta a mensagem e abre o WhatsApp. */
+export const AGENDAR = {
+  id: "agendar",
+  rotulo: "Pré-agendamento",
+  titulo: "Pré-agende sua primeira conversa",
+  lead: "Escolha o assunto e o formato. A mensagem chega pronta no WhatsApp da Dra. Luciene, e a equipe confirma o dia e o horário com você.",
+  passosTitulo: "Como funciona",
+  passos: [
+    { titulo: "Você preenche", texto: "Nome, assunto, formato e o melhor período. Leva menos de um minuto." },
+    { titulo: "O WhatsApp abre", texto: "A mensagem aparece pronta no seu WhatsApp. É só tocar em enviar." },
+    { titulo: "A equipe confirma", texto: "Em horário comercial, combinamos o dia e o horário da conversa." },
+  ],
+  horario: CONTATO.horario,
+  privacidade: "Nenhum dado fica salvo no site: tudo vai direto para o seu WhatsApp. Sem compromisso de contratação.",
+  campos: {
+    nome: "Seu nome",
+    nomePlaceholder: "Como podemos te chamar?",
+    nomeErro: "Conte seu nome para a Dra. Luciene saber com quem está falando.",
+    assunto: "Assunto",
+    formato: "Formato do atendimento",
+    periodo: "Melhor período",
+    mensagem: "Quer adiantar algo? (opcional)",
+    mensagemPlaceholder: "Por exemplo: inventário do meu pai, somos três irmãos, há um imóvel.",
+  },
+  assuntos: [
+    "Inventário",
+    "Planejamento sucessório",
+    "Testamento",
+    "Direito de Família",
+    "Direito Civil",
+    "Direito do Consumidor",
+    "Direito Médico",
+    "Cidadania Italiana",
+    "Outro assunto",
+  ],
+  formatos: ["Presencial em Resende-RJ", "Online por videochamada"],
+  periodos: ["Manhã", "Tarde", "Tanto faz"],
+  previa: "Prévia da mensagem",
+  enviar: "Enviar pelo WhatsApp",
+  /** Monta o texto que vai para o WhatsApp. O detalhe só entra se escrito. */
+  mensagem(dados: {
+    readonly nome: string;
+    readonly assunto: string;
+    readonly formato: string;
+    readonly periodo: string;
+    readonly detalhe: string;
+  }): string {
+    const detalhe = dados.detalhe.trim();
+    return [
+      "Olá, Dra. Luciene. Vim pelo site e gostaria de pré-agendar uma conversa.",
+      "",
+      `Nome: ${dados.nome.trim() || "..."}`,
+      `Assunto: ${dados.assunto}`,
+      `Formato: ${dados.formato}`,
+      `Melhor período: ${dados.periodo}`,
+      ...(detalhe ? ["", detalhe] : []),
+    ].join("\n");
+  },
+  link(texto: string): string {
+    return `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(texto)}`;
+  },
 } as const;

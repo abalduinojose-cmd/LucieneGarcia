@@ -13,7 +13,7 @@ export function Sobre() {
     <Section id={SOBRE.id} labelledBy={TITULO_ID}>
       <div className="grid gap-12 lg:grid-cols-12 lg:items-center lg:gap-16">
         <div className="lg:col-span-6 xl:col-span-5">
-          <SectionHeading id={TITULO_ID} numero="01" rotulo={SOBRE.rotulo} titulo={SOBRE.titulo} />
+          <SectionHeading id={TITULO_ID} rotulo={SOBRE.rotulo} titulo={SOBRE.titulo} />
 
           <p className="revelar poetico mt-6 text-[1.5rem] leading-snug text-gold-light">{SOBRE.frase}</p>
 

@@ -1,0 +1,592 @@
+@import "tailwindcss";
+
+/* --------------------------------------------------------------------------
+   Luciene Garcia Advocacia · Tokens de design
+
+   Estrutura e componentes do Cabana Afrodite (pedido da cliente), com a
+   paleta da marca e todas as seções no escuro.
+
+   Contraste medido sobre o preto real (#000) e sobre o ink-soft (#241E10):
+     gold-light #EAD8AF   15,1:1 no preto · 11,9:1 no ink-soft   títulos e texto
+     champagne  #CFBB90   11,0:1 no preto ·  8,7:1 no ink-soft   texto de apoio
+     gold       #A4813D    5,8:1 com texto preto por cima        fundo de botão
+   O #A4813D NUNCA é cor de texto: fica em bordas, ícones, fios e botões.
+   -------------------------------------------------------------------------- */
+:root {
+  --ink: #000000;
+  --ink-soft: #241e10;
+  --ink-card: #15110a;
+  --gold: #a4813d;
+  --gold-light: #ead8af;
+  --champagne: #cfbb90;
+  --gold-dark: #6f5729;
+  --gold-top: #d3b06b;
+  --gold-end: #977535;
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-card: var(--ink-card);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-champagne: var(--champagne);
+  --color-gold-dark: var(--gold-dark);
+
+  --font-display: var(--font-crimson), "Crimson Pro", Georgia, serif;
+  --font-body: var(--font-plex-sans), "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), "IBM Plex Mono", ui-monospace, monospace;
+  --font-sans: var(--font-body);
+
+  --ease-serra: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+    background-color: var(--ink);
+  }
+
+  body {
+    background-color: var(--ink);
+    color: var(--champagne);
+    font-family: var(--font-body);
+    line-height: 1.7;
+    /* algarismos alinhados: os de estilo antigo da serifa fazem "10" virar "1o" */
+    font-variant-numeric: lining-nums;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Extremos, como pede o guia: títulos finíssimos e grandes contra rótulos
+     de 11px em mono. */
+  h1,
+  h2 {
+    font-weight: 250;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    color: var(--gold-light);
+    letter-spacing: -0.01em;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--gold-light);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  ::selection {
+    background-color: var(--gold);
+    color: var(--ink);
+  }
+
+  /* Atmosfera: grão de papel quase invisível sobre o preto, para o fundo
+     não ficar chapado. SVG embutido, sem requisição e sem mix-blend-mode
+     (que custou 10 pontos de performance na Celebrare). */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    pointer-events: none;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.92 0 0 0 0 0.85 0 0 0 0 0.69 0 0 0 1.4 -0.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  }
+  @media (prefers-contrast: more) {
+    body::before {
+      display: none;
+    }
+  }
+
+  /* Selo do Next em desenvolvimento: só existe em dev. */
+  nextjs-portal {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Utilitários da marca
+   -------------------------------------------------------------------------- */
+@utility container-page {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 80rem;
+  padding-inline: clamp(1rem, 5vw, 3.5rem);
+}
+
+/* Rótulos em Plex Mono: a "voz de protocolo" do site (eyebrows, selos,
+   datas, contadores). */
+@utility rotulo-caps {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* O nome como na logo: caixa alta bem espaçada. */
+@utility nome-caps {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* Frase em serifa itálica, a voz "humana" do site. */
+@utility poetico {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+}
+
+@utility leitura {
+  max-width: 65ch;
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Alinha o início dos trilhos à coluna do container, sangrando à direita. */
+@utility gallery-inset {
+  --gallery-gutter: clamp(1rem, 5vw, 3.5rem);
+  padding-inline: max(var(--gallery-gutter), calc((100% - 80rem) / 2 + var(--gallery-gutter)));
+  scroll-padding-inline: max(var(--gallery-gutter), calc((100% - 80rem) / 2 + var(--gallery-gutter)));
+}
+
+/* --------------------------------------------------------------------------
+   Componentes (pílulas, cartões, trilhos, CTA fixo: padrão Cabana)
+   -------------------------------------------------------------------------- */
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    border-radius: 999px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      translate 0.35s var(--ease-serra),
+      scale 0.2s ease,
+      box-shadow 0.35s ease,
+      filter 0.3s ease,
+      background-color 0.3s ease,
+      border-color 0.3s ease,
+      color 0.3s ease;
+  }
+  .btn:active {
+    scale: 0.97;
+  }
+
+  /* Primário: ouro com brilho interno. Texto preto (5,8:1 no meio do ouro). */
+  .btn-ouro {
+    background: linear-gradient(115deg, var(--gold-top) 0%, var(--gold) 55%, var(--gold-end) 100%);
+    color: var(--ink);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.3),
+      0 14px 30px -14px rgb(0 0 0 / 0.9);
+  }
+  .btn-ouro:hover {
+    filter: brightness(1.08);
+    translate: 0 -2px;
+  }
+
+  .btn-contorno {
+    border: 1px solid rgb(234 216 175 / 0.45);
+    color: var(--gold-light);
+    backdrop-filter: blur(6px);
+  }
+  .btn-contorno:hover {
+    background: var(--gold-light);
+    border-color: var(--gold-light);
+    color: var(--ink);
+  }
+
+  /* Discreto: pílula de vidro para apoio, sem competir com o principal. */
+  .btn-discreto {
+    border: 1px solid rgb(234 216 175 / 0.22);
+    background: rgb(234 216 175 / 0.08);
+    color: var(--gold-light);
+    font-weight: 500;
+    backdrop-filter: blur(8px);
+  }
+  .btn-discreto:hover {
+    background: rgb(234 216 175 / 0.16);
+    border-color: rgb(234 216 175 / 0.4);
+    translate: 0 -1px;
+  }
+
+  .btn-seta {
+    display: inline-flex;
+    height: 2.1rem;
+    width: 2.1rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: rgb(0 0 0 / 0.14);
+    transition: translate 0.35s var(--ease-serra);
+  }
+  .btn:hover .btn-seta {
+    translate: 3px 0;
+  }
+
+  /* Cartões escuros com fio dourado e sombra funda. */
+  .cartao {
+    background: linear-gradient(180deg, #1a150c 0%, var(--ink-card) 100%);
+    border: 1px solid rgb(164 129 61 / 0.22);
+    border-radius: 1.25rem;
+    box-shadow:
+      inset 0 1px 0 rgb(234 216 175 / 0.06),
+      0 18px 40px -24px rgb(0 0 0 / 0.9);
+  }
+  .cartao-vivo {
+    transition:
+      translate 0.35s var(--ease-serra),
+      border-color 0.35s ease,
+      box-shadow 0.35s var(--ease-serra);
+  }
+  .cartao-vivo:hover {
+    translate: 0 -4px;
+    border-color: rgb(164 129 61 / 0.55);
+  }
+
+  /* Setas de carrossel */
+  .seta-trilho {
+    display: inline-flex;
+    height: 2.75rem;
+    width: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    border: 1px solid rgb(234 216 175 / 0.28);
+    color: var(--gold-light);
+    background: rgb(234 216 175 / 0.05);
+    cursor: pointer;
+    transition:
+      background-color 0.3s ease,
+      border-color 0.3s ease,
+      color 0.3s ease,
+      opacity 0.3s ease;
+  }
+  .seta-trilho:hover:not(:disabled) {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--ink);
+  }
+  .seta-trilho:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  /* Sublinhado que se desenha */
+  .link-draw {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.35s var(--ease-serra);
+  }
+  .link-draw:hover,
+  .link-draw:focus-visible {
+    background-size: 100% 1px;
+  }
+
+  /* Véus sobre fotos com texto */
+  /* No celular a foto fica em cima e o texto embaixo: véu vertical. No
+     desktop a foto ocupa a metade direita: véu lateral funde a borda. */
+  .veu-hero {
+    background: linear-gradient(180deg, rgb(0 0 0 / 0.45) 0%, rgb(0 0 0 / 0) 22%, rgb(0 0 0 / 0) 40%, rgb(0 0 0 / 0.9) 60%);
+  }
+  @media (min-width: 768px) {
+    .veu-hero {
+      background:
+        linear-gradient(90deg, rgb(0 0 0 / 1) 42%, rgb(0 0 0 / 0.55) 62%, rgb(0 0 0 / 0) 82%),
+        linear-gradient(180deg, rgb(0 0 0 / 0.55) 0%, rgb(0 0 0 / 0) 28%, rgb(0 0 0 / 0) 60%, rgb(0 0 0 / 0.9) 100%);
+    }
+  }
+  .veu-foto {
+    background: linear-gradient(
+      180deg,
+      rgb(0 0 0 / 0.35) 0%,
+      rgb(0 0 0 / 0.1) 34%,
+      rgb(0 0 0 / 0.6) 70%,
+      rgb(0 0 0 / 0.9) 100%
+    );
+  }
+
+  /* Marca-texto: bloco de ouro translúcido atrás do trecho de destaque. */
+  .marca-texto {
+    color: var(--ink);
+    background-image: linear-gradient(115deg, var(--gold-top) 0%, var(--gold) 60%, var(--gold-end) 100%);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    padding: 0 0.16em 0.04em;
+    margin-inline: -0.02em;
+    border-radius: 0.08em;
+  }
+
+  /* CTA fixo: pílula com selo e seta em círculo (padrão Cabana). Centrado
+     por margem, para o translate ficar livre para a entrada. */
+  .cta-fixo {
+    position: fixed;
+    z-index: 40;
+    inset-inline: 0;
+    margin-inline: auto;
+    width: fit-content;
+    bottom: max(0.9rem, env(safe-area-inset-bottom));
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.4rem 0.4rem 0.4rem 1.15rem;
+    border-radius: 999px;
+    white-space: nowrap;
+    background: rgb(21 17 10 / 0.92);
+    border: 1px solid rgb(164 129 61 / 0.45);
+    backdrop-filter: blur(14px);
+    color: var(--gold-light);
+    box-shadow: 0 14px 34px -14px rgb(0 0 0 / 0.9);
+  }
+  .cta-fixo {
+    transition:
+      translate 0.45s var(--ease-serra),
+      opacity 0.35s ease,
+      visibility 0.35s;
+  }
+  .cta-fixo.cta-oculto {
+    opacity: 0;
+    translate: 0 160%;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .cta-seta {
+    display: inline-flex;
+    height: 2.5rem;
+    width: 2.5rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: linear-gradient(115deg, var(--gold-top) 0%, var(--gold) 55%, var(--gold-end) 100%);
+    color: var(--ink);
+    transition: translate 0.35s var(--ease-serra);
+  }
+  .cta-fixo:hover .cta-seta {
+    translate: 3px 0;
+  }
+  @media (min-width: 768px) {
+    .cta-fixo {
+      inset-inline: auto 1.5rem;
+      bottom: 1.5rem;
+    }
+  }
+
+  /* Fade na borda direita dos trilhos. */
+  .trilho-fade {
+    -webkit-mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 2.5rem), transparent);
+    mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 2.5rem), transparent);
+  }
+
+  /* FAQ: o + gira para virar ×. */
+  details[open] > summary .faq-sinal {
+    rotate: 45deg;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+}
+
+/* Luz de abajur: um halo dourado na lateral, a mesma luz quente da foto da
+   Justiça. Centrado no meio da seção para não marcar emenda com a silhueta. Dá profundidade às seções sem virar gradiente chamativo. */
+@utility luz {
+  background-image: radial-gradient(60rem 32rem at 0% 55%, rgb(164 129 61 / 0.12), transparent 70%);
+}
+@utility luz-direita {
+  background-image: radial-gradient(56rem 30rem at 100% 50%, rgb(164 129 61 / 0.09), transparent 70%);
+}
+
+/* Entrada escalonada nas grades: cada item entra um passo depois do outro. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .escalonar > .revelar:nth-child(2) {
+      animation-range: entry 8% entry 63%;
+    }
+    .escalonar > .revelar:nth-child(3) {
+      animation-range: entry 16% entry 71%;
+    }
+    .escalonar > .revelar:nth-child(4) {
+      animation-range: entry 24% entry 79%;
+    }
+    .escalonar > .revelar:nth-child(n + 5) {
+      animation-range: entry 30% entry 85%;
+    }
+  }
+}
+
+/* Pontes: a cor da seção vizinha vaza sobre a foto full-bleed e some. */
+@utility ponte-topo-ink {
+  background-image: linear-gradient(to bottom, var(--ink) 0%, transparent 100%);
+}
+@utility ponte-topo-soft {
+  background-image: linear-gradient(to bottom, var(--ink-soft) 0%, transparent 100%);
+}
+@utility ponte-base-ink {
+  background-image: linear-gradient(to top, var(--ink) 0%, transparent 100%);
+}
+
+/* Véu de chegada do hero: o estado final é transparente. Sem animação
+   (movimento reduzido) ele simplesmente não aparece. */
+.hero-clarear {
+  opacity: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Movimento: CSS puro. Tudo nasce no estado final; a animação é enfeite e
+   só existe para quem não pediu movimento reduzido.
+   -------------------------------------------------------------------------- */
+@keyframes rise {
+  from {
+    opacity: 0;
+    translate: 0 1.5rem;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@keyframes hero-zoom {
+  from {
+    scale: 1.07;
+  }
+  to {
+    scale: 1;
+  }
+}
+@keyframes hero-clarear {
+  from {
+    opacity: 0.55;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes traco-desenha {
+  from {
+    scale: 0 1;
+  }
+  to {
+    scale: 1 1;
+  }
+}
+@keyframes marcar-texto {
+  from {
+    background-size: 0% 100%;
+  }
+  to {
+    background-size: 100% 100%;
+  }
+}
+
+@keyframes mapa-pulso {
+  from {
+    scale: 0.4;
+    opacity: 0.9;
+  }
+  to {
+    scale: 1.6;
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .mapa-pulso {
+    animation: mapa-pulso 2.4s var(--ease-serra) infinite;
+  }
+  .rise {
+    animation: rise 0.9s var(--ease-serra) both;
+  }
+  .hero-zoom {
+    animation: hero-zoom 2.6s var(--ease-serra) both;
+  }
+  .hero-clarear {
+    animation: hero-clarear 1.3s ease-out both;
+  }
+  .traco-desenha {
+    transform-origin: left center;
+    animation: traco-desenha 0.8s var(--ease-serra) 0.2s both;
+  }
+  .marca-texto {
+    animation: marcar-texto 0.7s var(--ease-serra) 0.6s both;
+  }
+
+  @supports (animation-timeline: view()) {
+    /* revelar ao rolar, sem JS */
+    .revelar {
+      animation: rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+
+    /* fotos full-bleed: parallax enquanto cruzam a tela */
+    @keyframes deriva-foto {
+      from {
+        translate: 0 -4%;
+        scale: 1.12;
+      }
+      to {
+        translate: 0 4%;
+        scale: 1.12;
+      }
+    }
+    .deriva-foto {
+      animation: deriva-foto linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+
+    /* imagem que se abre como cortina ao entrar em cena */
+    @keyframes cortina {
+      from {
+        clip-path: inset(18% 0 0 0 round 1.75rem);
+        opacity: 0.25;
+      }
+      to {
+        clip-path: inset(0 0 0 0 round 1.75rem);
+        opacity: 1;
+      }
+    }
+    .cortina {
+      animation: cortina linear both;
+      animation-timeline: view();
+      animation-range: entry 15% cover 40%;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

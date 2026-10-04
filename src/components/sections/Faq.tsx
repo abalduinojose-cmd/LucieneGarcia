@@ -26,7 +26,7 @@ export function Faq() {
             <details key={item.id} name="perguntas" className="group border-b border-gold-light/8 last:border-0">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-8 px-6 py-5 transition-colors duration-300 hover:bg-gold-light/[0.03] md:px-8">
                 <h3 className="font-body text-[1.0625rem] font-semibold leading-snug">{item.pergunta}</h3>
-                <span className="faq-sinal inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-gold/40 text-gold-light transition duration-300 ease-serra group-open:border-gold group-open:bg-gold group-open:text-ink">
+                <span className="faq-sinal inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-gold/40 text-gold-light transition duration-300 ease-serra group-open:border-gold group-open:bg-gold group-open:text-preto">
                   <Icone nome="mais" className="size-4" traco={1.75} />
                 </span>
               </summary>

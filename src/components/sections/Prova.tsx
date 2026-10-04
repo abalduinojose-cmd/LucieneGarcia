@@ -15,19 +15,19 @@ function Estrelas() {
 }
 
 /**
- * Faixa de números logo abaixo do hero, em cartões de vidro: ícone, número
+ * Faixa de números logo abaixo do hero, em cartões brancos: ícone, número
  * grande e leve, rótulo em caixa alta. No celular, 2x2 com espaço entre os
  * cartões (sem os fios verticais que ficavam desalinhados na segunda linha).
  */
 export function Prova() {
   return (
-    <section aria-label="Números do escritório" className="luz bg-ink-soft py-14 md:py-20">
+    <section aria-label="Números do escritório" className="bg-ink-soft py-14 md:py-20">
       <Container>
         <dl className="escalonar grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">
           {PROVA.numeros.map((numero) => (
             <div
               key={numero.rotulo}
-              className="revelar group relative flex flex-col-reverse overflow-hidden rounded-2xl border border-gold/20 bg-gradient-to-b from-gold-light/[0.06] to-transparent p-5 transition duration-500 ease-serra hover:-translate-y-1 hover:border-gold/45 md:p-7"
+              className="revelar group relative flex flex-col-reverse overflow-hidden rounded-2xl border border-gold/20 bg-ink-card p-5 shadow-[var(--sombra-cartao)] transition duration-500 ease-serra hover:-translate-y-1 hover:border-gold/45 md:p-7"
             >
               {/* brilho que acende no hover, no canto do ícone */}
               <span

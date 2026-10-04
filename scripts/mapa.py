@@ -1,9 +1,9 @@
 """
 Mapa estático do Escritório na identidade do site: mosaico de tiles do
 OpenStreetMap em zoom de rua (17), centrado no endereço real (Av. Augusto de
-Carvalho, 163, Terras Alpha) e recolorido como mapa noturno: quadras em
-preto quente, ruas em bronze apagado, vias principais em ouro e os nomes das
-ruas em champagne, legíveis sobre o escuro.
+Carvalho, 163, Terras Alpha) e recolorido como papel claro (tema claro,
+out/2026): quadras em creme, prédios em champagne, ruas em branco, vias
+principais em ouro claro e os nomes das ruas em sépia, legíveis no claro.
 
 O pino NÃO é assado aqui: a UI desenha o marcador no centro exato.
 Exige o crédito visível "© OpenStreetMap" onde o mapa aparecer.
@@ -54,25 +54,25 @@ def cor(hexa: str) -> np.ndarray:
     return np.array([int(hexa[i : i + 2], 16) for i in (1, 3, 5)]) / 255
 
 
-# Rampa invertida: a tinta do OSM (texto, contorno) vira champagne; a quadra
-# vira o preto quente do site; os prédios ficam um tom acima do chão.
-champagne, predio, chao = cor("#cfbb90"), cor("#251d11"), cor("#110d07")
+# Rampa direta: a tinta do OSM (texto, contorno) vira sépia; a quadra vira
+# o creme do site; os prédios ficam um tom de champagne abaixo do chão.
+tinta, predio, chao = cor("#6b5d43"), cor("#e6dbc6"), cor("#f6f1e6")
 t = np.clip((L - 0.35) / 0.6, 0, 1)[..., None]
-base = np.where(t < 0.8, champagne + (predio - champagne) * (t / 0.8), predio + (chao - predio) * ((t - 0.8) / 0.2))
+base = np.where(t < 0.8, tinta + (predio - tinta) * (t / 0.8), predio + (chao - predio) * ((t - 0.8) / 0.2))
 
-# Via local (branca no OSM) em bronze apagado; via principal (amarelo e
-# laranja no OSM: R alto, B baixo) em ouro.
+# Via local (branca no OSM) fica branca; via principal (amarelo e laranja no
+# OSM: R alto, B baixo) em ouro claro.
 branca = np.clip((L - 0.962) / 0.038, 0, 1)[..., None]
 quente = (np.clip((R - 0.93) / 0.07, 0, 1) * np.clip((0.86 - B) / 0.15, 0, 1) * (G > 0.72))[..., None]
-rua, ouro = cor("#4a3b20"), cor("#a4813d")
+rua, ouro = cor("#ffffff"), cor("#dcc48f")
 saida = base * (1 - branca) + rua * branca
 saida = saida * (1 - quente) + ouro * quente
 
-# Verde e água viram tons escuros próprios, para o olho achar o rio e as praças.
+# Verde e água em tons claros próprios, para o olho achar o rio e as praças.
 verde = ((G - R) > 0.06) & ((G - B) > 0.06)
 agua = (B - R) > 0.12
-saida[verde] = saida[verde] * 0.35 + cor("#1a1d0e") * 0.65
-saida[agua] = saida[agua] * 0.25 + cor("#0c1418") * 0.75
+saida[verde] = saida[verde] * 0.35 + cor("#e3e2c9") * 0.65
+saida[agua] = saida[agua] * 0.25 + cor("#d3dfdf") * 0.75
 
 DESTINO.parent.mkdir(parents=True, exist_ok=True)
 Image.fromarray((np.clip(saida, 0, 1) * 255).astype("uint8")).save(DESTINO, quality=82, optimize=True, progressive=True)

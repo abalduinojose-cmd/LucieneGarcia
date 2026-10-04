@@ -1,27 +1,57 @@
 @import "tailwindcss";
 
 /* --------------------------------------------------------------------------
-   Luciene Garcia Advocacia · Tokens de design
+   Luciene Garcia Advocacia · Tokens de design (tema claro, out/2026)
 
-   Estrutura e componentes do Cabana Afrodite (pedido da cliente), com a
-   paleta da marca e todas as seções no escuro.
+   Estrutura do Cabana Afrodite, agora com fundo claro: creme e champagne na
+   identidade da marca, dourado nos fios e ícones e o preto só em poucos
+   pontos (botão principal, a faixa da Justiça, o fechamento e o rodapé).
 
-   Contraste medido sobre o preto real (#000) e sobre o ink-soft (#241E10):
-     gold-light #EAD8AF   15,1:1 no preto · 11,9:1 no ink-soft   títulos e texto
-     champagne  #CFBB90   11,0:1 no preto ·  8,7:1 no ink-soft   texto de apoio
-     gold       #A4813D    5,8:1 com texto preto por cima        fundo de botão
-   O #A4813D NUNCA é cor de texto: fica em bordas, ícones, fios e botões.
+   Os nomes dos tokens vêm da versão escura e foram mantidos de propósito:
+   "ink" é o fundo, "gold-light" o texto forte, "champagne" o texto de apoio.
+   A classe .tema-escuro devolve os valores escuros dentro de um trecho.
+
+   Contraste medido (fundo creme / champagne claro / branco):
+     gold-light #1A160F   17,0 / 15,3 / 18,0   títulos e texto
+     champagne  #5B513F    7,4 /  6,6 /  7,8   texto de apoio
+     gold-dark  #7A5E26    5,7 /  5,2 /  6,1   texto dourado pequeno
+     gold       #A4813D    3,4 /  3,1 /  3,6   só fios, ícones e bordas
    -------------------------------------------------------------------------- */
 :root {
+  --ink: #fbf8f2;
+  --ink-soft: #f3ecdf;
+  --ink-card: #ffffff;
+  --gold: #a4813d;
+  --gold-light: #1a160f;
+  --champagne: #5b513f;
+  --gold-dark: #7a5e26;
+  --gold-top: #d3b06b;
+  --gold-end: #977535;
+  /* fixos nos dois temas */
+  --preto: #14110c;
+  --creme: #fbf8f2;
+  /* botão principal: preto no claro, ouro no escuro */
+  --btn-bg: var(--preto);
+  --btn-fg: var(--creme);
+  --btn-chip-bg: var(--gold);
+  --btn-chip-fg: var(--preto);
+  --sombra-cartao: 0 18px 40px -28px rgb(20 17 12 / 0.28);
+}
+
+/* Trechos escuros: os mesmos tokens com os valores da versão preta. */
+.tema-escuro {
   --ink: #000000;
   --ink-soft: #241e10;
   --ink-card: #15110a;
-  --gold: #a4813d;
   --gold-light: #ead8af;
   --champagne: #cfbb90;
-  --gold-dark: #6f5729;
-  --gold-top: #d3b06b;
-  --gold-end: #977535;
+  --gold-dark: #cfbb90;
+  --btn-bg: linear-gradient(115deg, var(--gold-top) 0%, var(--gold) 55%, var(--gold-end) 100%);
+  --btn-fg: var(--preto);
+  --btn-chip-bg: rgb(0 0 0 / 0.16);
+  --btn-chip-fg: var(--preto);
+  --sombra-cartao: 0 18px 40px -24px rgb(0 0 0 / 0.9);
+  color: var(--champagne);
 }
 
 @theme inline {
@@ -32,6 +62,8 @@
   --color-gold-light: var(--gold-light);
   --color-champagne: var(--champagne);
   --color-gold-dark: var(--gold-dark);
+  --color-preto: var(--preto);
+  --color-creme: var(--creme);
 
   --font-display: var(--font-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
   --font-body: var(--font-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
@@ -99,25 +131,7 @@
 
   ::selection {
     background-color: var(--gold);
-    color: var(--ink);
-  }
-
-  /* Atmosfera: grão de papel quase invisível sobre o preto, para o fundo
-     não ficar chapado. SVG embutido, sem requisição e sem mix-blend-mode
-     (que custou 10 pontos de performance na Celebrare). */
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: 30;
-    pointer-events: none;
-    opacity: 0.06;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.92 0 0 0 0 0.85 0 0 0 0 0.69 0 0 0 1.4 -0.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
-  }
-  @media (prefers-contrast: more) {
-    body::before {
-      display: none;
-    }
+    color: var(--preto);
   }
 
   /* Selo do Next em desenvolvimento: só existe em dev. */
@@ -184,20 +198,22 @@
    -------------------------------------------------------------------------- */
 @layer components {
   .btn {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.65rem;
+    gap: 0.7rem;
     border-radius: 999px;
     font-weight: 600;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.005em;
     white-space: nowrap;
     cursor: pointer;
     transition:
       translate 0.35s var(--ease-serra),
       scale 0.2s ease,
       box-shadow 0.35s ease,
-      filter 0.3s ease,
       background-color 0.3s ease,
       border-color 0.3s ease,
       color 0.3s ease;
@@ -206,41 +222,55 @@
     scale: 0.97;
   }
 
-  /* Primário: ouro com brilho interno. Texto preto (5,8:1 no meio do ouro). */
+  /* Primário: preto com texto creme no tema claro; ouro com texto preto
+     dentro de .tema-escuro. Um brilho atravessa no hover. */
   .btn-ouro {
-    background: linear-gradient(115deg, var(--gold-top) 0%, var(--gold) 55%, var(--gold-end) 100%);
-    color: var(--ink);
+    background: var(--btn-bg);
+    color: var(--btn-fg);
     box-shadow:
-      inset 0 1px 0 rgb(255 255 255 / 0.3),
-      0 14px 30px -14px rgb(0 0 0 / 0.9);
+      inset 0 1px 0 rgb(255 255 255 / 0.18),
+      0 16px 32px -18px rgb(20 17 12 / 0.55);
+  }
+  .btn-ouro::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(105deg, transparent 30%, rgb(255 255 255 / 0.22) 50%, transparent 70%);
+    translate: -120% 0;
+    transition: translate 0.8s var(--ease-serra);
   }
   .btn-ouro:hover {
-    filter: brightness(1.08);
     translate: 0 -2px;
+  }
+  .btn-ouro:hover::before {
+    translate: 120% 0;
   }
 
   .btn-contorno {
-    border: 1px solid rgb(234 216 175 / 0.45);
+    border: 1px solid color-mix(in oklab, var(--gold-light) 28%, transparent);
+    background: color-mix(in oklab, var(--ink-card) 60%, transparent);
     color: var(--gold-light);
-    backdrop-filter: blur(6px);
+    backdrop-filter: blur(8px);
   }
   .btn-contorno:hover {
     background: var(--gold-light);
     border-color: var(--gold-light);
     color: var(--ink);
+    translate: 0 -2px;
   }
 
   /* Discreto: pílula de vidro para apoio, sem competir com o principal. */
   .btn-discreto {
-    border: 1px solid rgb(234 216 175 / 0.22);
-    background: rgb(234 216 175 / 0.08);
+    border: 1px solid color-mix(in oklab, var(--gold-light) 22%, transparent);
+    background: color-mix(in oklab, var(--gold-light) 8%, transparent);
     color: var(--gold-light);
     font-weight: 500;
     backdrop-filter: blur(8px);
   }
   .btn-discreto:hover {
-    background: rgb(234 216 175 / 0.16);
-    border-color: rgb(234 216 175 / 0.4);
+    background: color-mix(in oklab, var(--gold-light) 16%, transparent);
+    border-color: color-mix(in oklab, var(--gold-light) 40%, transparent);
     translate: 0 -1px;
   }
 
@@ -252,21 +282,20 @@
     align-items: center;
     justify-content: center;
     border-radius: 999px;
-    background: rgb(0 0 0 / 0.14);
-    transition: translate 0.35s var(--ease-serra);
+    background: var(--btn-chip-bg);
+    color: var(--btn-chip-fg);
+    transition: rotate 0.4s var(--ease-serra);
   }
   .btn:hover .btn-seta {
-    translate: 3px 0;
+    rotate: 45deg;
   }
 
-  /* Cartões escuros com fio dourado e sombra funda. */
+  /* Cartões: superfície limpa, fio dourado fino e sombra curta. */
   .cartao {
-    background: linear-gradient(180deg, #1a150c 0%, var(--ink-card) 100%);
-    border: 1px solid rgb(164 129 61 / 0.22);
+    background: var(--ink-card);
+    border: 1px solid rgb(164 129 61 / 0.2);
     border-radius: 1.25rem;
-    box-shadow:
-      inset 0 1px 0 rgb(234 216 175 / 0.06),
-      0 18px 40px -24px rgb(0 0 0 / 0.9);
+    box-shadow: var(--sombra-cartao);
   }
   .cartao-vivo {
     transition:
@@ -287,9 +316,9 @@
     align-items: center;
     justify-content: center;
     border-radius: 999px;
-    border: 1px solid rgb(234 216 175 / 0.28);
+    border: 1px solid color-mix(in oklab, var(--gold-light) 22%, transparent);
     color: var(--gold-light);
-    background: rgb(234 216 175 / 0.05);
+    background: var(--ink-card);
     cursor: pointer;
     transition:
       background-color 0.3s ease,
@@ -298,9 +327,9 @@
       opacity 0.3s ease;
   }
   .seta-trilho:hover:not(:disabled) {
-    background: var(--gold);
-    border-color: var(--gold);
-    color: var(--ink);
+    background: var(--preto);
+    border-color: var(--preto);
+    color: var(--creme);
   }
   .seta-trilho:disabled {
     opacity: 0.3;
@@ -320,19 +349,7 @@
     background-size: 100% 1px;
   }
 
-  /* Véus sobre fotos com texto */
-  /* No celular a foto fica em cima e o texto embaixo: véu vertical. No
-     desktop a foto ocupa a metade direita: véu lateral funde a borda. */
-  .veu-hero {
-    background: linear-gradient(180deg, rgb(0 0 0 / 0.45) 0%, rgb(0 0 0 / 0) 22%, rgb(0 0 0 / 0) 40%, rgb(0 0 0 / 0.9) 60%);
-  }
-  @media (min-width: 768px) {
-    .veu-hero {
-      background:
-        linear-gradient(90deg, rgb(0 0 0 / 1) 42%, rgb(0 0 0 / 0.55) 62%, rgb(0 0 0 / 0) 82%),
-        linear-gradient(180deg, rgb(0 0 0 / 0.55) 0%, rgb(0 0 0 / 0) 28%, rgb(0 0 0 / 0) 60%, rgb(0 0 0 / 0.9) 100%);
-    }
-  }
+  /* Véu das fotos com texto por cima (só nos trechos escuros). */
   .veu-foto {
     background: linear-gradient(
       180deg,
@@ -345,7 +362,7 @@
 
   /* Marca-texto: bloco de ouro translúcido atrás do trecho de destaque. */
   .marca-texto {
-    color: var(--ink);
+    color: var(--preto);
     background-image: linear-gradient(115deg, var(--gold-top) 0%, var(--gold) 60%, var(--gold-end) 100%);
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -369,15 +386,6 @@
   summary::-webkit-details-marker {
     display: none;
   }
-}
-
-/* Luz de abajur: um halo dourado na lateral, a mesma luz quente da foto da
-   Justiça. Centrado no meio da seção para não marcar emenda com a silhueta. Dá profundidade às seções sem virar gradiente chamativo. */
-@utility luz {
-  background-image: radial-gradient(60rem 32rem at 0% 55%, rgb(164 129 61 / 0.12), transparent 70%);
-}
-@utility luz-direita {
-  background-image: radial-gradient(56rem 30rem at 100% 50%, rgb(164 129 61 / 0.09), transparent 70%);
 }
 
 /* Entrada escalonada nas grades: cada item entra um passo depois do outro. */

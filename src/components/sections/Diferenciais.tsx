@@ -28,7 +28,7 @@ export function Diferenciais() {
               />
 
               <div className="flex items-start justify-between">
-                <span className="inline-flex size-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#d3b06b] via-gold to-[#977535] text-ink shadow-[inset_0_1px_0_rgb(255_255_255/0.3)] transition-[translate] duration-500 ease-serra group-hover:-translate-y-1">
+                <span className="inline-flex size-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#d3b06b] via-gold to-[#977535] text-preto shadow-[inset_0_1px_0_rgb(255_255_255/0.3)] transition-[translate] duration-500 ease-serra group-hover:-translate-y-1">
                   <Icone nome={item.icone as NomeIcone} className="size-[1.35rem]" traco={1.5} />
                 </span>
                 {/* marca d'água em pseudo-elemento: é enfeite, não texto a ler */}

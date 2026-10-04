@@ -30,13 +30,13 @@ export function MapaEscritorio({ mapa, alt, nome, bairro, href, rotuloAbrir }: M
         className="object-cover transition-[scale] duration-[1.2s] ease-serra group-hover:scale-[1.04]"
       />
       {/* vinheta: as bordas do mapa se dissolvem no cartão */}
-      <span aria-hidden className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgb(0_0_0/0.75)_100%)]" />
+      <span aria-hidden className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,rgb(251_248_242/0.7)_100%)]" />
 
       {/* pino: anel que pulsa + gota dourada com o monograma */}
       <span aria-hidden className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-full">
         <span className="mapa-pulso absolute bottom-0 left-1/2 size-16 -translate-x-1/2 translate-y-1/2 rounded-full border border-gold/60" />
         <span className="relative flex flex-col items-center">
-          <span className="flex size-12 items-center justify-center rounded-full rounded-br-none rotate-45 bg-gradient-to-br from-[#d3b06b] via-gold to-[#977535] shadow-[0_10px_24px_-8px_rgb(0_0_0/0.9)]">
+          <span className="flex size-12 items-center justify-center rounded-full rounded-br-none rotate-45 bg-gradient-to-br from-[#d3b06b] via-gold to-[#977535] shadow-[0_10px_24px_-8px_rgb(20_17_12/0.45)]">
             <span className="-rotate-45">
               <LogoMarca className="h-6 brightness-0" />
             </span>
@@ -51,7 +51,7 @@ export function MapaEscritorio({ mapa, alt, nome, bairro, href, rotuloAbrir }: M
           <span className="block truncate font-display text-[1.15rem] text-gold-light">{nome}</span>
           <span className="rotulo-caps mt-1 block text-[0.55rem] text-champagne">{bairro}</span>
         </span>
-        <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-full bg-gold text-ink transition-[translate] duration-300 group-hover:translate-x-0.5">
+        <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-full bg-gold text-preto transition-[translate] duration-300 group-hover:translate-x-0.5">
           <Icone nome="seta" className="size-4" traco={1.75} />
         </span>
       </span>

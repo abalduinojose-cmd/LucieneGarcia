@@ -3,18 +3,12 @@ import type { ReactNode } from "react";
 import { Container } from "@/components/ui/Container";
 import { cx } from "@/lib/cx";
 
-/** Os dois tons do ritmo das seções: preto e o marrom-escuro da marca. */
+/** Os dois tons do ritmo das seções: o creme e o champagne claro da marca. */
 export type Tom = "ink" | "soft";
 
 export const FUNDO: Record<Tom, string> = {
   ink: "bg-ink",
   soft: "bg-ink-soft",
-};
-
-/** A luz de abajur alterna o lado conforme o tom, para o ritmo não ficar repetitivo. */
-const LUZ: Record<Tom, string> = {
-  ink: "luz-direita",
-  soft: "luz",
 };
 
 type SectionProps = {
@@ -41,7 +35,7 @@ export function Section({
     <section
       id={id}
       aria-labelledby={labelledBy}
-      className={cx("relative py-20 md:py-28", FUNDO[tom], LUZ[tom], className)}
+      className={cx("relative py-20 md:py-28", FUNDO[tom], className)}
     >
       {bleed ? children : <Container className={containerClassName}>{children}</Container>}
     </section>

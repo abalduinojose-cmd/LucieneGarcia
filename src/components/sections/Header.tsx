@@ -76,13 +76,13 @@ export function Header() {
         className={cx(
           "fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color] duration-500",
           solido
-            ? "border-gold/15 bg-ink/92 shadow-[0_12px_30px_-26px_rgb(0_0_0/0.9)] backdrop-blur-md"
+            ? "border-gold/15 bg-ink/92 shadow-[0_12px_30px_-26px_rgb(20_17_12/0.35)] backdrop-blur-md"
             : "border-transparent",
         )}
       >
         <a
           href="#conteudo"
-          className="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:left-4 focus-visible:top-4 focus-visible:z-10 focus-visible:rounded-full focus-visible:bg-gold focus-visible:px-4 focus-visible:py-2 focus-visible:text-sm focus-visible:text-ink"
+          className="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:left-4 focus-visible:top-4 focus-visible:z-10 focus-visible:rounded-full focus-visible:bg-gold focus-visible:px-4 focus-visible:py-2 focus-visible:text-sm focus-visible:text-preto"
         >
           {A11Y.pularConteudo}
         </a>
@@ -103,7 +103,7 @@ export function Header() {
             {fio ? (
               <span
                 aria-hidden
-                className="absolute top-1/2 h-8 -translate-y-1/2 rounded-full bg-gold-light/10 shadow-[inset_0_1px_0_rgb(234_216_175/0.15)] transition-[left,width] duration-500 ease-serra"
+                className="absolute top-1/2 h-8 -translate-y-1/2 rounded-full bg-gold-light/[0.06] transition-[left,width] duration-500 ease-serra"
                 style={{ left: fio.left, width: fio.width }}
               />
             ) : null}

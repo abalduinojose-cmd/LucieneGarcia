@@ -7,7 +7,7 @@ import { AREAS, whatsapp, type Area } from "@/lib/site-config";
 const TITULO_ID = "titulo-areas";
 
 /**
- * Cartões escuros (as "comodidades" do Cabana). Na grade de 3 colunas o
+ * Cartões brancos (as "comodidades" do Cabana). Na grade de 3 colunas o
  * inventário ocupa 2x2 e os outros cinco fecham o retângulo.
  */
 function CardArea({ area, destaque }: { readonly area: Area; readonly destaque: boolean }) {
@@ -23,7 +23,7 @@ function CardArea({ area, destaque }: { readonly area: Area; readonly destaque: 
           className={cx(
             "inline-flex items-center justify-center rounded-2xl",
             destaque
-              ? "size-14 bg-gradient-to-br from-[#d3b06b] via-gold to-[#977535] text-ink"
+              ? "size-14 bg-gradient-to-br from-[#d3b06b] via-gold to-[#977535] text-preto"
               : "size-12 border border-gold/35 text-gold",
           )}
         >
@@ -44,9 +44,9 @@ function CardArea({ area, destaque }: { readonly area: Area; readonly destaque: 
       </p>
 
       {area.topicos ? (
-        <ul className="mt-8 grid gap-x-8 gap-y-3.5 border-t border-gold-light/10 pt-7 sm:grid-cols-2">
+        <ul className="mt-8 border-t border-gold/15">
           {area.topicos.map((topico) => (
-            <li key={topico} className="flex items-center gap-3 text-[0.9375rem] text-gold-light">
+            <li key={topico} className="flex items-center gap-3.5 border-b border-gold/15 py-4 text-[1rem] text-gold-light">
               <span aria-hidden className="size-1.5 shrink-0 rounded-full bg-gold" />
               {topico}
             </li>

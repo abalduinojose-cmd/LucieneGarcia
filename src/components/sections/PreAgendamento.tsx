@@ -61,7 +61,7 @@ function Opcoes({ legenda, nome, opcoes, valor, aoMudar, estilo, icones }: Opcoe
               "relative flex cursor-pointer items-center gap-2 rounded-full border px-4 text-[0.875rem] transition duration-300 ease-serra",
               estilo === "chips" ? "h-10" : "h-12 justify-center px-3",
               "border-gold-light/15 bg-gold-light/[0.03] text-gold-light hover:border-gold/60",
-              "has-checked:border-transparent has-checked:bg-gold has-checked:font-semibold has-checked:text-ink",
+              "has-checked:border-transparent has-checked:bg-preto has-checked:font-semibold has-checked:text-creme",
               "has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-gold-light",
             )}
           >
@@ -128,7 +128,7 @@ export function PreAgendamento() {
               <span aria-hidden className="absolute bottom-3 left-[1.0625rem] top-3 w-px bg-gold/30" />
               {AGENDAR.passos.map((passo, indice) => (
                 <li key={passo.titulo} className="relative flex gap-4">
-                  <span className="relative z-10 inline-flex size-[2.125rem] shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#d3b06b] via-gold to-[#977535] text-[0.8125rem] font-bold text-ink">
+                  <span className="relative z-10 inline-flex size-[2.125rem] shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#d3b06b] via-gold to-[#977535] text-[0.8125rem] font-bold text-preto">
                     {indice + 1}
                   </span>
                   <span className="pt-1">

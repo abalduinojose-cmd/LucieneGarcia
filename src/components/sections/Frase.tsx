@@ -18,7 +18,7 @@ export function Frase() {
   return (
     <section
       aria-label={FRASE.poetico}
-      className="relative isolate overflow-hidden bg-ink md:flex md:min-h-[82svh] md:items-end md:py-20"
+      className="tema-escuro relative isolate overflow-hidden bg-ink md:flex md:min-h-[82svh] md:items-end md:py-20"
     >
       <div className="relative aspect-[4/3] w-full md:absolute md:inset-0 md:-z-20 md:aspect-auto">
         <Image
@@ -30,8 +30,7 @@ export function Frase() {
           sizes="(max-width: 767px) 135vw, 100vw"
           className="object-cover object-[74%_center] md:object-[center_42%]"
         />
-        {/* bordas que se fundem no preto das seções vizinhas */}
-        <div aria-hidden className="ponte-topo-ink absolute inset-x-0 top-0 h-6 md:h-28" />
+        {/* base que se funde no preto do texto (no celular, a frase vem embaixo) */}
         <div aria-hidden className="ponte-base-ink absolute inset-x-0 bottom-0 h-1/3 md:h-40" />
         {/* só no desktop: sombra lateral onde o texto fica, o resto da foto limpo */}
         <div

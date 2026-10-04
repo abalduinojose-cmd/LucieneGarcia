@@ -156,13 +156,6 @@ export const HERO = {
   local: CONTATO.atendimento,
   cta: "Conversar sobre o inventário",
   ctaSecundario: "Entender como funciona",
-  /** Faixa do pé do hero: um dado forte + um complemento curto, com ícone. */
-  selos: [
-    { icone: "estrela", valor: "5,0 no Google", detalhe: "160 avaliações" },
-    { icone: "relogio", valor: "+10 anos", detalhe: "de advocacia" },
-    { icone: "local", valor: "Presencial", detalhe: "em Resende-RJ" },
-    { icone: "online", valor: "Online", detalhe: "em todo o Brasil" },
-  ],
   retratoAlt: "Retrato da advogada Luciene Garcia",
 } as const;
 

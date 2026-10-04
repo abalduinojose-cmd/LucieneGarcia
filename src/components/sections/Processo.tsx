@@ -27,7 +27,7 @@ export function Processo() {
         <span aria-hidden className="absolute left-[12%] right-[12%] top-[3.25rem] hidden h-px bg-gradient-to-r from-transparent via-gold/60 to-transparent lg:block" />
         {PROCESSO.passos.map((passo, indice) => (
           <li key={passo.titulo} className="revelar cartao relative flex flex-col p-7">
-            <span className="relative z-10 inline-flex size-12 items-center justify-center self-start rounded-full bg-gradient-to-br from-[#d3b06b] via-gold to-[#977535] font-display text-2xl text-ink">
+            <span className="relative z-10 inline-flex size-12 items-center justify-center self-start rounded-full bg-gradient-to-br from-[#d3b06b] via-gold to-[#977535] font-display text-2xl text-preto">
               {indice + 1}
             </span>
             <h3 className="mt-6 text-[1.6rem] leading-tight">{passo.titulo}</h3>

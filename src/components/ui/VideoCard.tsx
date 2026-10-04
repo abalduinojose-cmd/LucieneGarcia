@@ -23,7 +23,7 @@ export function VideoCard({ slug, titulo, duracao, poster, rotuloPlay }: VideoCa
   const [tocando, setTocando] = useState(false);
 
   return (
-    <figure className="cartao cartao-vivo group relative overflow-hidden !rounded-[1.5rem]">
+    <figure className="tema-escuro cartao cartao-vivo group relative overflow-hidden !rounded-[1.5rem]">
       <div className="relative aspect-9/16 bg-ink">
         {tocando ? (
           <video
@@ -55,7 +55,7 @@ export function VideoCard({ slug, titulo, duracao, poster, rotuloPlay }: VideoCa
               <span
                 className={cx(
                   "inline-flex size-16 items-center justify-center rounded-full border border-gold-light/40 bg-gold-light/15 text-gold-light backdrop-blur-md transition duration-300 ease-serra",
-                  "group-hover:scale-110 group-hover:border-transparent group-hover:bg-gold group-hover:text-ink",
+                  "group-hover:scale-110 group-hover:border-transparent group-hover:bg-gold group-hover:text-preto",
                 )}
               >
                 <svg viewBox="0 0 24 24" className="ml-0.5 size-6" fill="currentColor" aria-hidden focusable="false">

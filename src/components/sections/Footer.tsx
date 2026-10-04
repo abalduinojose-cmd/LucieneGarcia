@@ -19,7 +19,7 @@ export function Footer() {
   const ano = new Date().getFullYear();
 
   return (
-    <footer className="relative isolate overflow-hidden bg-ink pb-28 pt-20 md:pb-20">
+    <footer className="tema-escuro relative isolate overflow-hidden bg-ink pb-28 pt-20 md:pb-20">
       <Monogram className="pointer-events-none absolute -bottom-20 left-1/2 -z-10 h-72 w-auto -translate-x-1/2 text-gold/[0.08]" />
       <div aria-hidden className="absolute left-1/2 top-0 -z-10 h-72 w-[36rem] max-w-full -translate-x-1/2 rounded-full bg-gold/10 blur-[110px]" />
       <div aria-hidden className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold/45 to-transparent" />
@@ -38,7 +38,7 @@ export function Footer() {
                 rel="noopener noreferrer"
                 aria-label={rede.rotulo}
                 title={rede.rotulo}
-                className="group relative inline-flex size-12 items-center justify-center rounded-2xl border border-gold-light/12 bg-gold-light/[0.04] text-gold-light transition duration-300 ease-serra hover:-translate-y-1 hover:border-transparent hover:text-ink"
+                className="group relative inline-flex size-12 items-center justify-center rounded-2xl border border-gold-light/12 bg-gold-light/[0.04] text-gold-light transition duration-300 ease-serra hover:-translate-y-1 hover:border-transparent hover:text-preto"
               >
                 <span
                   aria-hidden

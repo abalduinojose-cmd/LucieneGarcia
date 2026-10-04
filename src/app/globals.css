@@ -811,7 +811,9 @@
         opacity: 1;
       }
     }
-    .trilho-videos > li {
+    /* seletor reforçado: as regras de .escalonar (:nth-child) também mexem no
+       animation-range e venceriam, deixando o vídeo do centro apagado */
+    .trilho-videos.escalonar > .revelar:nth-child(n) {
       animation: video-foco linear both;
       animation-timeline: view(inline);
       animation-range: cover 0% cover 100%;

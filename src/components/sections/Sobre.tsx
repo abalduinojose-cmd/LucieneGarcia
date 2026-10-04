@@ -40,7 +40,7 @@ export function Sobre() {
               fill
               placeholder="blur"
               sizes="(min-width: 1024px) 46vw, (min-width: 640px) 70vw, 92vw"
-              className="object-cover"
+              className="foto-revela object-cover"
             />
           </div>
         </figure>

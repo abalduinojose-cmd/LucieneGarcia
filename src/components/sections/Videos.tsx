@@ -1,6 +1,7 @@
 import { Icone } from "@/components/ui/Icone";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { TrilhoCentrado } from "@/components/ui/TrilhoCentrado";
 import { VideoCard } from "@/components/ui/VideoCard";
 import { POSTERS } from "@/lib/midia";
 import { CONTATO, VIDEOS } from "@/lib/site-config";
@@ -25,10 +26,10 @@ export function Videos() {
         className="mx-auto max-w-2xl"
       />
 
-      {/* No celular, trilho de borda a borda com o vídeo do meio da tela em
-          foco (o recuo lateral centraliza o primeiro e o último). Do tablet
-          para cima, os três lado a lado no centro da página. */}
-      <ul className="escalonar scrollbar-none relative mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-8 max-md:ml-[calc(50%-50vw)] max-md:w-screen max-md:px-[calc(50vw-min(31vw,7.5rem))] md:mx-auto md:grid md:max-w-[54rem] md:grid-cols-3 md:gap-5 md:overflow-visible md:pb-2">
+      {/* No celular, trilho de borda a borda que abre no vídeo do meio, com os
+          vizinhos aparecendo dos dois lados e menores (coverflow, ver
+          globals.css). Do tablet para cima, os três lado a lado no centro. */}
+      <TrilhoCentrado className="trilho-videos escalonar scrollbar-none relative mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-8 max-md:ml-[calc(50%-50vw)] max-md:w-screen max-md:px-[calc(50vw-min(31vw,7.5rem))] md:mx-auto md:grid md:max-w-[54rem] md:grid-cols-3 md:gap-5 md:overflow-visible md:pb-2">
         {VIDEOS.itens.map((video) => (
           <li key={video.slug} className="revelar w-[62vw] max-w-[15rem] shrink-0 snap-center md:w-auto md:max-w-none">
             <VideoCard
@@ -40,7 +41,7 @@ export function Videos() {
             />
           </li>
         ))}
-      </ul>
+      </TrilhoCentrado>
 
       <article className="revelar cartao mx-auto mt-4 flex max-w-xl flex-col items-center px-7 py-9 text-center md:mt-12 md:px-12">
         <span className="inline-flex size-14 items-center justify-center rounded-full bg-gradient-to-br from-[#d3b06b] via-gold to-[#977535] text-preto shadow-[0_12px_26px_-14px_rgb(164_129_61/0.8)]">

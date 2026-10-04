@@ -1,6 +1,30 @@
+import type { CSSProperties } from "react";
+
 import { Container } from "@/components/ui/Container";
 import { Icone, type NomeIcone } from "@/components/ui/Icone";
 import { PROVA } from "@/lib/site-config";
+
+/**
+ * Número que conta ao entrar na tela ("160" sobe de 0 a 160). O valor real
+ * fica num span só para leitores de tela; o visível é um contador CSS
+ * (@property --contagem, globals.css) que, sem suporte a scroll-driven
+ * animations, já mostra o número final (data-final).
+ */
+function Valor({ valor }: { readonly valor: string }) {
+  const partes = /^(\D*)(\d+)(.*)$/.exec(valor);
+  if (!partes) return <>{valor}</>;
+  const [, antes, numero, depois] = partes;
+  return (
+    <>
+      <span className="sr-only">{valor}</span>
+      <span aria-hidden>
+        {antes}
+        <span className="contador" data-final={numero} style={{ "--alvo": Number(numero) } as CSSProperties} />
+        {depois}
+      </span>
+    </>
+  );
+}
 
 function Estrelas() {
   return (
@@ -43,8 +67,8 @@ export function Prova() {
                   <Icone nome={numero.icone as NomeIcone} className="size-[1.1rem]" traco={1.5} />
                 </span>
                 <span className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                  <span className="text-[clamp(2.2rem,4vw,3.2rem)] font-display font-medium leading-none tracking-[-0.04em] text-gold-light">
-                    {numero.valor}
+                  <span className="text-[clamp(2.2rem,4vw,3.2rem)] font-display font-medium leading-none tracking-[-0.04em] tabular-nums text-gold-light">
+                    <Valor valor={numero.valor} />
                   </span>
                   {numero.sufixo ? (
                     <span className="text-[1rem] font-medium text-champagne md:text-[1.125rem]">{numero.sufixo}</span>

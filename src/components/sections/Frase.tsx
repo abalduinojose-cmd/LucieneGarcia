@@ -28,7 +28,7 @@ export function Frase() {
           quality={90}
           placeholder="blur"
           sizes="(max-width: 767px) 135vw, 100vw"
-          className="object-cover object-[74%_center] md:object-[center_42%]"
+          className="foto-revela object-cover object-[74%_center] md:object-[center_42%]"
         />
         {/* base que se funde no preto do texto (no celular, a frase vem embaixo) */}
         <div aria-hidden className="ponte-base-ink absolute inset-x-0 bottom-0 h-1/3 md:h-40" />

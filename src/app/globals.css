@@ -70,6 +70,8 @@
   --font-sans: var(--font-body);
 
   --ease-serra: cubic-bezier(0.16, 1, 0.3, 1);
+  /* nas animações presas à rolagem: chega rápido e assenta devagar */
+  --ease-rolagem: cubic-bezier(0.2, 0.75, 0.25, 1);
 }
 
 /* --------------------------------------------------------------------------
@@ -84,6 +86,8 @@
   }
 
   body {
+    /* clip, não hidden: não cria contêiner de rolagem e o sticky segue valendo */
+    overflow-x: clip;
     background-color: var(--ink);
     color: var(--champagne);
     font-family: var(--font-body);
@@ -536,6 +540,38 @@
   filter: drop-shadow(0 -6px 12px rgb(20 17 12 / 0.12));
 }
 
+/* Títulos de seção: cada palavra numa máscara (a folga vertical deixa os
+   acentos e as pernas do "ç" e do "p" de fora do recorte). */
+.titulo-palavras .palavra {
+  display: inline-block;
+  overflow: clip;
+  vertical-align: top;
+  padding-block: 0.14em 0.18em;
+  margin-block: -0.14em -0.18em;
+}
+.titulo-palavras .palavra > span {
+  display: inline-block;
+}
+
+/* Contador dos números: sem suporte, mostra o número final. */
+@property --contagem {
+  syntax: "<integer>";
+  inherits: false;
+  initial-value: 0;
+}
+.contador::after {
+  content: attr(data-final);
+}
+
+/* Processo: o número grande da etapa, em marca d'água. A barra de avanço
+   só existe no modo horizontal (desktop com suporte). */
+.processo-numero {
+  font-size: 3.5rem;
+}
+.processo-avanco {
+  display: none;
+}
+
 /* Animações de chegada (no carregamento) e enfeites em loop: só para quem
    não pediu movimento reduzido. */
 @media (prefers-reduced-motion: no-preference) {
@@ -614,18 +650,6 @@
       translate: 0 0;
     }
   }
-  @keyframes surgir-desfoque {
-    from {
-      opacity: 0;
-      translate: 0 0.35em;
-      filter: blur(10px);
-    }
-    to {
-      opacity: 1;
-      translate: 0 0;
-      filter: blur(0);
-    }
-  }
   @keyframes estender {
     from {
       scale: 0 1;
@@ -692,7 +716,7 @@
 
   /* conteúdo das seções */
   .revelar {
-    animation: surgir linear both;
+    animation: surgir var(--ease-rolagem) both;
     animation-timeline: view();
     animation-range: entry 0% entry 60%;
   }
@@ -709,22 +733,157 @@
     animation-range: entry 30% entry 90%;
   }
 
-  /* títulos: o traço se estende, o título sai do desfoque, o apoio vem depois */
+  /* títulos: o traço se estende, as palavras sobem, o apoio vem depois */
   .traco-rola {
     transform-origin: left center;
-    animation: estender linear both;
+    animation: estender var(--ease-rolagem) both;
     animation-timeline: view();
     animation-range: entry 10% entry 90%;
   }
-  .revelar-titulo {
-    animation: surgir-desfoque linear both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 80%;
-  }
   .revelar-tarde {
-    animation: surgir linear both;
+    animation: surgir var(--ease-rolagem) both;
     animation-timeline: view();
     animation-range: entry 20% entry 95%;
+  }
+
+  /* títulos: as palavras sobem de trás da linha, uma depois da outra */
+  @keyframes palavra-sobe {
+    from {
+      translate: 0 112%;
+    }
+    to {
+      translate: 0 0;
+    }
+  }
+  .titulo-palavras {
+    view-timeline: --titulo block;
+  }
+  .titulo-palavras .palavra > span {
+    animation: palavra-sobe var(--ease-rolagem) both;
+    animation-timeline: --titulo;
+    animation-range: entry calc(var(--i, 0) * 4%) entry calc(55% + var(--i, 0) * 4%);
+  }
+
+  /* números contam de 0 até o valor ao entrar */
+  @keyframes contar {
+    from {
+      --contagem: 0;
+    }
+    to {
+      --contagem: var(--alvo);
+    }
+  }
+  .contador {
+    counter-reset: contagem var(--contagem);
+    animation: contar var(--ease-rolagem) both;
+    animation-timeline: view();
+    animation-range: entry 10% cover 45%;
+  }
+  .contador::after {
+    content: counter(contagem);
+  }
+
+  /* fotos entram com um zoom de afastamento */
+  @keyframes foto-afasta {
+    from {
+      scale: 1.16;
+    }
+    to {
+      scale: 1;
+    }
+  }
+  .foto-revela {
+    animation: foto-afasta var(--ease-rolagem) both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 50%;
+  }
+
+  /* celular: carrossel de vídeos em "coverflow", o do centro em foco */
+  @media (max-width: 47.99rem) {
+    @keyframes video-foco {
+      0%,
+      100% {
+        scale: 0.84;
+        opacity: 0.5;
+      }
+      50% {
+        scale: 1;
+        opacity: 1;
+      }
+    }
+    .trilho-videos > li {
+      animation: video-foco linear both;
+      animation-timeline: view(inline);
+      animation-range: cover 0% cover 100%;
+    }
+  }
+
+  /* desktop: o caminho do inventário em faixa horizontal presa na tela */
+  @media (min-width: 64rem) {
+    @keyframes processo-desliza {
+      from {
+        translate: 0 0;
+      }
+      to {
+        translate: calc(-100% + 100cqw) 0;
+      }
+    }
+    .processo-trilho {
+      height: calc(100svh + 60rem);
+      view-timeline: --processo block;
+    }
+    .processo-palco {
+      position: sticky;
+      top: 4.5rem;
+      height: calc(100svh - 4.5rem);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 2.5rem;
+      /* sangra até as bordas da tela, com o recuo do container por dentro */
+      margin-inline: calc(50% - 50vw);
+      padding-inline: max(clamp(1rem, 5vw, 3.5rem), calc((100vw - 80rem) / 2 + clamp(1rem, 5vw, 3.5rem)));
+      container-type: inline-size;
+      overflow-x: clip;
+    }
+    .processo-faixa {
+      display: flex;
+      width: max-content;
+      margin-top: 0;
+      gap: 1.5rem;
+      animation: processo-desliza linear both;
+      animation-timeline: --processo;
+      animation-range: contain 0% contain 100%;
+    }
+    .processo-passo {
+      width: 30rem;
+      min-height: 24rem;
+      padding: 2.5rem;
+    }
+    .processo-passo h3 {
+      font-size: 2.25rem;
+    }
+    .processo-passo p {
+      font-size: 1.0625rem;
+    }
+    .processo-numero {
+      font-size: 6rem;
+    }
+    .processo-avanco {
+      display: block;
+      height: 1px;
+      background: color-mix(in oklab, var(--gold) 25%, transparent);
+    }
+    .processo-avanco > span {
+      display: block;
+      height: 2px;
+      margin-top: -0.5px;
+      transform-origin: left center;
+      background: linear-gradient(90deg, var(--gold-top), var(--gold), var(--gold-end));
+      animation: progresso linear both;
+      animation-timeline: --processo;
+      animation-range: contain 0% contain 100%;
+    }
   }
 
   /* entre as seções */

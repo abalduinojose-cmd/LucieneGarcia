@@ -10,7 +10,7 @@ const TITULO_ID = "titulo-escritorio";
 /** A "localização" do Cabana: o mapa na identidade do site e o cartão de como é o atendimento. */
 export function Escritorio() {
   return (
-    <Section id={ESCRITORIO.id} labelledBy={TITULO_ID}>
+    <Section labelledBy={TITULO_ID}>
       <SectionHeading id={TITULO_ID} rotulo={ESCRITORIO.rotulo} titulo={ESCRITORIO.titulo} lead={ESCRITORIO.lead} className="max-w-3xl" />
 
       <div className="mt-12 grid gap-10 lg:grid-cols-2 lg:gap-14">

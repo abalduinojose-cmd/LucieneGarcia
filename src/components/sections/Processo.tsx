@@ -11,7 +11,7 @@ const TITULO_ID = "titulo-processo";
  */
 export function Processo() {
   return (
-    <Section id={PROCESSO.id} tom="soft" labelledBy={TITULO_ID}>
+    <Section tom="soft" labelledBy={TITULO_ID}>
       <SectionHeading
         id={TITULO_ID}
        

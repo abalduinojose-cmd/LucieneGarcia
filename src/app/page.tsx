@@ -14,51 +14,66 @@ import { Prova } from "@/components/sections/Prova";
 import { Sobre } from "@/components/sections/Sobre";
 import { Videos } from "@/components/sections/Videos";
 import { WhatsAppFlutuante } from "@/components/sections/WhatsAppFlutuante";
-import { Silhueta } from "@/components/ui/Silhueta";
+import { Folha } from "@/components/ui/Folha";
+import { Folhas } from "@/components/ui/Folhas";
+import { AGENDAR, AREAS, AVALIACOES, ESCRITORIO, PERGUNTAS, PROCESSO, SOBRE, VIDEOS } from "@/lib/site-config";
 
-/** Mesma sequência do Cabana Afrodite, com o conteúdo da advocacia. */
+/**
+ * Mesma sequência do Cabana Afrodite, com o conteúdo da advocacia, montada
+ * em folhas que se empilham ao rolar: cada uma para no pé da tela e a
+ * seguinte desliza por cima, com a crista em onda na frente.
+ */
 export default function Home() {
   return (
     <>
       <Header />
       <main id="conteudo">
-        <Hero />
-        <Prova />
+        <Folha ancora="topo">
+          <Hero />
+        </Folha>
+        <Folha borda>
+          <Prova />
+        </Folha>
 
-        <Silhueta de="soft" para="ink" />
-        <Sobre />
-        <Diferenciais />
+        <Folha ancora={SOBRE.id} crista="ink">
+          <Sobre />
+          <Diferenciais />
+        </Folha>
 
-        <Frase />
+        <Folha>
+          <Frase />
+        </Folha>
 
-        <Silhueta de="ink" para="soft" />
-        <Areas />
+        <Folha ancora={AREAS.id} crista="soft">
+          <Areas />
+        </Folha>
+        <Folha ancora={VIDEOS.id} crista="ink">
+          <Videos />
+        </Folha>
+        <Folha ancora={AVALIACOES.id} crista="soft">
+          <Avaliacoes />
+        </Folha>
+        <Folha ancora={ESCRITORIO.id} crista="ink">
+          <Escritorio />
+        </Folha>
+        <Folha ancora={PROCESSO.id} crista="soft">
+          <Processo />
+        </Folha>
+        <Folha ancora={AGENDAR.id} crista="ink">
+          <PreAgendamento />
+        </Folha>
+        <Folha ancora={PERGUNTAS.id} crista="soft">
+          <Faq />
+        </Folha>
 
-        <Silhueta de="soft" para="ink" />
-        <Videos />
-
-        <Silhueta de="ink" para="soft" />
-        <Avaliacoes />
-
-        <Silhueta de="soft" para="ink" />
-        <Escritorio />
-
-        <Silhueta de="ink" para="soft" />
-        <Processo />
-
-        <Silhueta de="soft" para="ink" />
-        <PreAgendamento />
-
-        <Silhueta de="ink" para="soft" />
-        <Faq />
-
-        {/* o fundo champagne do FAQ continua dos lados enquanto o fechamento se abre */}
-        <div className="bg-ink-soft">
+        {/* fundo champagne: o do FAQ continua dos lados enquanto o fechamento se abre */}
+        <Folha className="bg-ink-soft">
           <Contato />
-        </div>
+        </Folha>
       </main>
       <Footer />
       <WhatsAppFlutuante />
+      <Folhas />
     </>
   );
 }

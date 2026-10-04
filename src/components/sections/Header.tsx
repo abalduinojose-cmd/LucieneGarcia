@@ -29,18 +29,39 @@ export function Header() {
   }, []);
 
   useEffect(() => {
-    const secoes = NAV.map((link) => document.getElementById(link.href.slice(1))).filter(
-      (secao): secao is HTMLElement => secao !== null,
+    // As âncoras ficam fora das folhas (que ficam presas ao rolar), então a
+    // posição delas é sempre a real. Vence a última que já passou da linha
+    // de 45% da tela. Um IntersectionObserver não serve aqui: a folha presa
+    // continua "visível" por baixo da seguinte e nunca dispararia a saída.
+    const ancoras = NAV.map((link) => document.getElementById(link.href.slice(1))).filter(
+      (ancora): ancora is HTMLElement => ancora !== null,
     );
-    // Faixa estreita no meio da tela: só uma seção vence por vez.
-    const observador = new IntersectionObserver(
-      (entradas) => {
-        for (const entrada of entradas) if (entrada.isIntersecting) setAtiva(entrada.target.id);
-      },
-      { rootMargin: "-40% 0px -55% 0px" },
-    );
-    secoes.forEach((secao) => observador.observe(secao));
-    return () => observador.disconnect();
+    let quadro = 0;
+    const medir = (): void => {
+      quadro = 0;
+      const linha = window.innerHeight * 0.45;
+      let atual = "";
+      let maisPerto = Number.NEGATIVE_INFINITY;
+      for (const ancora of ancoras) {
+        const topo = ancora.getBoundingClientRect().top;
+        if (topo <= linha && topo > maisPerto) {
+          maisPerto = topo;
+          atual = ancora.id;
+        }
+      }
+      setAtiva(atual);
+    };
+    const agendar = (): void => {
+      if (quadro === 0) quadro = requestAnimationFrame(medir);
+    };
+    medir();
+    window.addEventListener("scroll", agendar, { passive: true });
+    window.addEventListener("resize", agendar);
+    return () => {
+      window.removeEventListener("scroll", agendar);
+      window.removeEventListener("resize", agendar);
+      cancelAnimationFrame(quadro);
+    };
   }, []);
 
   useEffect(() => {
@@ -164,7 +185,7 @@ export function Header() {
                 href={link.href}
                 onClick={fechar}
                 style={{ animationDelay: `${indice * 55}ms` }}
-                className="rise border-b border-gold/15 py-5 font-display text-3xl font-light text-gold-light"
+                className="rise border-b border-gold/15 py-5 font-display text-3xl font-medium tracking-[-0.02em] text-gold-light"
               >
                 {link.rotulo}
               </a>

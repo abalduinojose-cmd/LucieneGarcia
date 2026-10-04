@@ -15,14 +15,13 @@ import { HERO, whatsapp } from "@/lib/site-config";
  *
  * O retrato começa abaixo do menu: o cabeçalho é transparente no topo.
  * Ao rolar, a foto desce mais devagar que a página e o texto sobe e esmaece
- * (timeline --hero, ver globals.css). O h1 não anima na entrada: é o LCP.
+ * (na chegada da folha seguinte, ver globals.css). O h1 não anima na entrada: é o LCP.
  */
 export function Hero() {
   return (
     <section
-      id="topo"
       aria-labelledby="titulo-hero"
-      className="hero-cena relative isolate overflow-hidden bg-ink md:flex md:min-h-[min(100svh,62rem)] md:items-center"
+      className="relative isolate overflow-hidden bg-ink md:flex md:min-h-[min(100svh,62rem)] md:items-center"
     >
       <div className="hero-foto relative mt-[4.5rem] aspect-[4/5] w-full max-md:max-h-[34rem] md:absolute md:bottom-0 md:right-0 md:top-[4.5rem] md:-z-10 md:mt-0 md:aspect-auto md:w-[46%] lg:w-[48%]">
         <Image

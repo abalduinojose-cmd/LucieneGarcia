@@ -15,7 +15,7 @@ const TITULO_ID = "titulo-videos";
  */
 export function Videos() {
   return (
-    <Section id={VIDEOS.id} labelledBy={TITULO_ID}>
+    <Section labelledBy={TITULO_ID}>
       <SectionHeading
         id={TITULO_ID}
         rotulo={VIDEOS.rotulo}

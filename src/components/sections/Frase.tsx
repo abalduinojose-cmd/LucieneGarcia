@@ -18,7 +18,7 @@ export function Frase() {
   return (
     <section
       aria-label={FRASE.poetico}
-      className="tema-escuro expandir relative isolate overflow-hidden bg-ink md:flex md:min-h-[82svh] md:items-end md:py-20"
+      className="tema-escuro expandir relative isolate overflow-hidden bg-ink md:flex md:min-h-[82svh] md:items-end md:pb-28 md:pt-20"
     >
       <div className="relative aspect-[4/3] w-full md:absolute md:inset-0 md:-z-20 md:aspect-auto">
         <Image
@@ -51,7 +51,7 @@ export function Frase() {
           <ul className="mt-9 grid gap-4 border-t border-gold-light/20 pt-6">
             {FRASE.citacoes.map((citacao) => (
               <li key={citacao.autor} className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
-                <q className="font-display text-[1.2rem] italic text-gold-light">{citacao.texto}</q>
+                <q className="font-display text-[1.2rem] font-light text-gold-light">{citacao.texto}</q>
                 <span className="text-sm text-champagne">{citacao.autor}</span>
               </li>
             ))}

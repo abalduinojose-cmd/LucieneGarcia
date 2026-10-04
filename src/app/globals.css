@@ -65,8 +65,8 @@
   --color-preto: var(--preto);
   --color-creme: var(--creme);
 
-  --font-display: var(--font-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
-  --font-body: var(--font-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-display: var(--font-funnel-display), "Funnel Display", system-ui, sans-serif;
+  --font-body: var(--font-funnel-sans), "Funnel Sans", system-ui, sans-serif;
   --font-sans: var(--font-body);
 
   --ease-serra: cubic-bezier(0.16, 1, 0.3, 1);
@@ -90,13 +90,11 @@
     line-height: 1.7;
     /* algarismos alinhados: os de estilo antigo da serifa fazem "10" virar "1o" */
     font-variant-numeric: lining-nums;
-    /* a Jakarta tem espaço entre palavras estreito: um respiro a mais */
-    word-spacing: 0.05em;
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Contraste por extremos: títulos grandes, leves e com tracking fechado
-     contra rótulos de 11px em caixa alta aberta. */
+  /* Contraste por extremos: títulos grandes e firmes (Funnel Display 500,
+     tracking fechado) contra rótulos de 11px em caixa alta aberta. */
   h1,
   h2,
   h3 {
@@ -106,17 +104,14 @@
   }
   h1,
   h2 {
-    font-weight: 300;
-    /* tracking fechado, mas o espaço entre palavras volta ao normal: a
-       Jakarta tem espaço estreito e as palavras grudavam no título */
-    letter-spacing: -0.025em;
-    word-spacing: 0.1em;
-    line-height: 1.06;
+    font-weight: 500;
+    letter-spacing: -0.032em;
+    line-height: 1.04;
   }
   h3 {
     font-weight: 500;
-    letter-spacing: -0.01em;
-    line-height: 1.2;
+    letter-spacing: -0.018em;
+    line-height: 1.18;
   }
 
   p {
@@ -167,12 +162,13 @@
   text-transform: uppercase;
 }
 
-/* Frase de destaque: itálico leve, a voz "humana" do site. */
+/* Frase de destaque: a voz "humana" do site. A Funnel não tem itálico (o
+   navegador inclinaria a letra à força), então o contraste vem do peso:
+   300 contra os títulos em 500. */
 @utility poetico {
   font-family: var(--font-display);
-  font-style: italic;
   font-weight: 300;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.022em;
 }
 
 @utility leitura {
@@ -500,6 +496,46 @@
   }
 }
 
+/* --------------------------------------------------------------------------
+   Folhas (Folha.tsx + Folhas.tsx): a página em folhas que se empilham.
+   Sem JS, fluxo normal. Com JS, cada folha mais alta que a tela fica
+   sticky com o pé no pé da tela (.folha-presa) e a seguinte desliza por
+   cima; a de baixo recua e escurece um pouco.
+   -------------------------------------------------------------------------- */
+@property --escuro {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+.folha {
+  position: relative;
+  isolation: isolate;
+}
+.folhas-ativas .folha-presa {
+  position: sticky;
+}
+/* véu que escurece a folha enquanto a próxima passa por cima */
+.folha::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  /* marrom quente, não preto: sobre o creme o preto vira cinza sujo */
+  background: #2b2216;
+  opacity: var(--escuro);
+}
+/* folha sem crista: cantos arredondados e sombra marcam a borda */
+.folha-borda {
+  overflow: clip;
+  border-radius: 2rem 2rem 0 0;
+  box-shadow: 0 -22px 44px -26px rgb(20 17 12 / 0.3);
+}
+/* a crista projeta uma sombra curta para cima, sobre a folha anterior */
+.silhueta-frente {
+  filter: drop-shadow(0 -6px 12px rgb(20 17 12 / 0.12));
+}
+
 /* Animações de chegada (no carregamento) e enfeites em loop: só para quem
    não pediu movimento reduzido. */
 @media (prefers-reduced-motion: no-preference) {
@@ -713,19 +749,33 @@
     animation-range: entry 15% cover 40%;
   }
 
-  /* saída do hero: a foto desce mais devagar que a página, o texto sobe e esmaece */
-  .hero-cena {
-    view-timeline: --hero block;
-  }
+  /* saída do hero: enquanto a folha seguinte sobe por cima dele, a foto
+     desce devagar e o texto sobe e esmaece (mesma --cobertura da folha) */
   .hero-foto {
     animation: hero-foto-sai linear both;
-    animation-timeline: --hero;
-    animation-range: exit 0% exit 100%;
+    animation-timeline: var(--cobertura, none);
+    animation-range: entry 0% entry 100%;
   }
   .hero-texto {
     animation: hero-texto-sai linear both;
-    animation-timeline: --hero;
-    animation-range: exit 0% exit 100%;
+    animation-timeline: var(--cobertura, none);
+    animation-range: entry 0% entry 100%;
+  }
+
+  /* folha presa: recua e escurece enquanto a próxima a cobre. A timeline é
+     a chegada da folha seguinte (--cobertura, posta por Folhas.tsx). A
+     origem é o meio do trecho que ainda aparece (o pé, nas folhas altas). */
+  @keyframes folha-recua {
+    to {
+      scale: 0.94;
+      --escuro: 0.22;
+    }
+  }
+  .folhas-ativas .folha-presa {
+    transform-origin: 50% max(50%, calc(100% - 50svh));
+    animation: folha-recua linear both;
+    animation-timeline: var(--cobertura, none);
+    animation-range: entry 0% entry 100%;
   }
 
   .progresso-rolagem {

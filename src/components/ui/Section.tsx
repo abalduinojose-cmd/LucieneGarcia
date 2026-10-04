@@ -11,9 +11,9 @@ export const FUNDO: Record<Tom, string> = {
   soft: "bg-ink-soft",
 };
 
+/** O id de âncora fica na Folha que envolve a seção, fora do elemento sticky. */
 type SectionProps = {
   readonly children: ReactNode;
-  readonly id?: string;
   readonly tom?: Tom;
   readonly labelledBy: string;
   readonly className?: string;
@@ -24,7 +24,6 @@ type SectionProps = {
 
 export function Section({
   children,
-  id,
   tom = "ink",
   labelledBy,
   className,
@@ -33,7 +32,6 @@ export function Section({
 }: SectionProps) {
   return (
     <section
-      id={id}
       aria-labelledby={labelledBy}
       className={cx("relative py-20 md:py-28", FUNDO[tom], className)}
     >

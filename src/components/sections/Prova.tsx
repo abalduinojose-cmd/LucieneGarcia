@@ -21,7 +21,7 @@ function Estrelas() {
  */
 export function Prova() {
   return (
-    <section aria-label="Números do escritório" className="bg-ink-soft py-14 md:py-20">
+    <section aria-label="Números do escritório" className="bg-ink-soft pb-20 pt-14 md:pb-28 md:pt-20">
       <Container>
         <dl className="escalonar grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">
           {PROVA.numeros.map((numero) => (
@@ -43,7 +43,7 @@ export function Prova() {
                   <Icone nome={numero.icone as NomeIcone} className="size-[1.1rem]" traco={1.5} />
                 </span>
                 <span className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                  <span className="text-[clamp(2.2rem,4vw,3.2rem)] font-light leading-none tracking-[-0.03em] text-gold-light">
+                  <span className="text-[clamp(2.2rem,4vw,3.2rem)] font-display font-medium leading-none tracking-[-0.04em] text-gold-light">
                     {numero.valor}
                   </span>
                   {numero.sufixo ? (

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Funnel_Display, Funnel_Sans } from "next/font/google";
 import type { ReactNode } from "react";
 
 import { grafo } from "@/lib/schema";
@@ -7,16 +7,21 @@ import { SITE } from "@/lib/site-config";
 import "./globals.css";
 
 /**
- * Uma família só, usada com decisão: Plus Jakarta Sans variável (200 a 800,
- * com itálico). Títulos grandes e leves com tracking fechado, rótulos em
- * caixa alta pequena, texto corrido em 400. Pedido da cliente por fontes
- * "mais clean e modernas" no lugar da serifa.
+ * Uma dupla da mesma família (out/2026, pedido por fontes "mais marcantes e
+ * clean ao mesmo tempo"): Funnel Display nos títulos, em peso 500 com
+ * tracking fechado, que tem desenho próprio (o "a" e o "t") sem perder a
+ * limpeza; Funnel Sans no texto corrido e nos rótulos. Acentos conferidos
+ * em amostra (á, í, ú, ç, õ, ê). As duas são variáveis (300 a 800).
  */
-const jakarta = Plus_Jakarta_Sans({
-  style: ["normal", "italic"],
+const display = Funnel_Display({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-jakarta",
+  variable: "--font-funnel-display",
+});
+const texto = Funnel_Sans({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-funnel-sans",
 });
 
 /** Só a origem: com subpasta o Next repetiria o basePath no og:image. */
@@ -54,7 +59,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { readonly children: ReactNode }) {
   return (
     // As variáveis das fontes ficam no <html>: é ali que o font-family resolve.
-    <html lang="pt-BR" className={jakarta.variable}>
+    <html lang="pt-BR" className={`${display.variable} ${texto.variable}`}>
       <body>
         {children}
         <script

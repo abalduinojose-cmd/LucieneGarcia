@@ -36,7 +36,7 @@ function CardArea({ area, destaque }: { readonly area: Area; readonly destaque: 
         ) : null}
       </div>
 
-      <h3 className={cx("mt-7", destaque ? "text-[clamp(2rem,3.2vw,2.8rem)] font-light" : "text-[1.55rem]")}>
+      <h3 className={cx("mt-7", destaque ? "text-[clamp(2rem,3.2vw,2.8rem)]" : "text-[1.55rem]")}>
         {area.titulo}
       </h3>
       <p className={cx("mt-3 leading-relaxed text-champagne", destaque ? "leitura text-[1.0625rem]" : "text-[0.9375rem]")}>
@@ -74,7 +74,7 @@ function CardArea({ area, destaque }: { readonly area: Area; readonly destaque: 
 
 export function Areas() {
   return (
-    <Section id={AREAS.id} tom="soft" labelledBy={TITULO_ID}>
+    <Section tom="soft" labelledBy={TITULO_ID}>
       <SectionHeading id={TITULO_ID} rotulo={AREAS.rotulo} titulo={AREAS.titulo} lead={AREAS.lead} className="max-w-3xl" />
 
       <ul className="escalonar mt-12 grid gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-3">

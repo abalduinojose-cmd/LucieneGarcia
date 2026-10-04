@@ -116,7 +116,7 @@ export function PreAgendamento() {
   const erroNome = tentou && !nomeValido;
 
   return (
-    <Section id={AGENDAR.id} labelledBy={TITULO_ID}>
+    <Section labelledBy={TITULO_ID}>
       <div className="grid gap-12 lg:grid-cols-12 lg:gap-14">
         {/* coluna de apoio: como funciona, horário e privacidade */}
         <div className="lg:col-span-5">

@@ -41,7 +41,7 @@ function Louro({ espelhado = false }: { readonly espelhado?: boolean }) {
 
 export function Avaliacoes() {
   return (
-    <Section id={AVALIACOES.id} tom="soft" labelledBy={TITULO_ID}>
+    <Section tom="soft" labelledBy={TITULO_ID}>
       <SectionHeading id={TITULO_ID} rotulo={AVALIACOES.rotulo} titulo={AVALIACOES.titulo} />
 
       <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:gap-14">
@@ -50,7 +50,7 @@ export function Avaliacoes() {
             <div className="flex items-center justify-center gap-3">
               <Louro />
               <div className="text-center">
-                <p className="font-display text-6xl font-light leading-none text-gold-light">{AVALIACOES.nota}</p>
+                <p className="font-display text-6xl font-medium leading-none tracking-[-0.04em] text-gold-light">{AVALIACOES.nota}</p>
                 <Estrelas className="mt-2 justify-center" />
               </div>
               <Louro espelhado />

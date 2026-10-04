@@ -10,7 +10,7 @@ const TITULO_ID = "titulo-sobre";
 
 export function Sobre() {
   return (
-    <Section id={SOBRE.id} labelledBy={TITULO_ID}>
+    <Section labelledBy={TITULO_ID}>
       <div className="grid gap-12 lg:grid-cols-12 lg:items-center lg:gap-16">
         <div className="lg:col-span-6 xl:col-span-5">
           <SectionHeading id={TITULO_ID} rotulo={SOBRE.rotulo} titulo={SOBRE.titulo} />

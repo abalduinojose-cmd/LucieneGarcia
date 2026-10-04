@@ -2,14 +2,15 @@
  * Imports estáticos das imagens. O next/image tira daqui largura, altura e
  * o blur de carregamento, então nenhuma foto causa layout shift.
  *
- * Hero: foto de estúdio da cliente (Instagram). Sobre: quadro sem legenda de
+ * Hero: foto de estúdio da cliente (Instagram) com o fundo estendido à
+ * esquerda (npm run retrato). Sobre: quadro sem legenda de
  * um reel (npm run videos). Mapa: npm run mapa. Avatares: npm run avatares.
  */
 import type { StaticImageData } from "next/image";
 
 import retratoSobre from "@/assets/fotos/retrato-sobre.jpg";
 import justica from "@/assets/fotos/justica.jpg";
-import lucieneEstudio from "@/assets/fotos/luciene-estudio.jpg";
+import lucieneEstudio from "@/assets/fotos/luciene-estudio-larga.jpg";
 import mapaEscritorio from "@/assets/mapa/escritorio.jpg";
 import cafeJuridico from "@/assets/fotos/cafe-juridico.jpg";
 import posterPerda from "@/assets/videos/perda.jpg";

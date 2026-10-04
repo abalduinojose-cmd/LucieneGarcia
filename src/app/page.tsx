@@ -52,7 +52,10 @@ export default function Home() {
         <Silhueta de="ink" para="soft" />
         <Faq />
 
-        <Contato />
+        {/* o fundo champagne do FAQ continua dos lados enquanto o fechamento se abre */}
+        <div className="bg-ink-soft">
+          <Contato />
+        </div>
       </main>
       <Footer />
       <WhatsAppFlutuante />

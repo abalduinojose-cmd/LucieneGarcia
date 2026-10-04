@@ -143,6 +143,11 @@ export function Header() {
             </button>
           </div>
         </div>
+        {/* progresso da leitura: um fio dourado que cresce com a rolagem */}
+        <span
+          aria-hidden
+          className="progresso-rolagem pointer-events-none absolute inset-x-0 -bottom-px h-0.5 bg-gradient-to-r from-[#d3b06b] via-gold to-[#977535]"
+        />
       </header>
 
       {/* Fora do <header>: o backdrop-blur dele viraria bloco de contenção

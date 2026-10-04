@@ -6,40 +6,40 @@ import { FOTOS } from "@/lib/midia";
 import { HERO, whatsapp } from "@/lib/site-config";
 
 /**
- * Hero claro e limpo: o texto à esquerda sobre o creme e o retrato à direita,
- * num cartão com moldura dourada deslocada (a foto é escura e, em tela
- * cheia esmaecendo para o creme, ficaria turva). No celular o retrato vem
- * primeiro, enquadrado no rosto, e o texto embaixo. Os números (nota,
- * avaliações, anos) ficam só na faixa logo abaixo, sem repetir aqui.
+ * Hero claro: do tablet para cima, o texto fica à esquerda e o retrato ocupa
+ * a metade direita, dissolvendo no creme para a esquerda num degradê leve
+ * (máscara, não véu: a foto some no fundo em vez de ganhar uma camada
+ * leitosa). A foto tem o fundo de estúdio estendido à esquerda
+ * (scripts/retrato-largo.py) para o degradê cair no pano, não na cliente.
+ * No celular o retrato vem em cima e se dissolve para baixo, no texto.
  *
- * Tudo é Server Component. O h1 não anima: é o candidato a LCP.
+ * O retrato começa abaixo do menu: o cabeçalho é transparente no topo.
+ * Ao rolar, a foto desce mais devagar que a página e o texto sobe e esmaece
+ * (timeline --hero, ver globals.css). O h1 não anima na entrada: é o LCP.
  */
 export function Hero() {
   return (
-    <section id="topo" aria-labelledby="titulo-hero" className="relative isolate overflow-hidden bg-ink">
-      {/* painel champagne atrás do retrato, abaixo do menu, para dar profundidade */}
-      <div aria-hidden className="absolute bottom-0 right-0 top-24 -z-10 hidden w-[36%] rounded-tl-[3rem] bg-ink-soft lg:block" />
+    <section
+      id="topo"
+      aria-labelledby="titulo-hero"
+      className="hero-cena relative isolate overflow-hidden bg-ink md:flex md:min-h-[min(100svh,62rem)] md:items-center"
+    >
+      <div className="hero-foto relative mt-[4.5rem] aspect-[4/5] w-full max-md:max-h-[34rem] md:absolute md:bottom-0 md:right-0 md:top-[4.5rem] md:-z-10 md:mt-0 md:aspect-auto md:w-[46%] lg:w-[48%]">
+        <Image
+          src={FOTOS.lucieneEstudio}
+          alt={HERO.retratoAlt}
+          fill
+          priority
+          fetchPriority="high"
+          placeholder="blur"
+          quality={75}
+          sizes="(min-width: 1024px) 48vw, (min-width: 768px) 46vw, 100vw"
+          className="object-cover object-[84%_top] md:object-[58%_top] lg:object-[25%_top]"
+        />
+      </div>
 
-      <div className="container-page grid items-center gap-10 pb-16 pt-24 md:pt-28 lg:grid-cols-12 lg:gap-12 lg:pb-24 lg:pt-36">
-        <figure className="rise relative mx-auto w-full max-w-sm lg:order-2 lg:col-span-5 lg:max-w-none">
-          {/* moldura dourada deslocada atrás do retrato */}
-          <span aria-hidden className="absolute inset-0 translate-x-3 translate-y-3 rounded-[2rem] border border-gold/60 lg:translate-x-5 lg:translate-y-5" />
-          <div className="relative aspect-square overflow-hidden rounded-[2rem] bg-preto shadow-[0_30px_60px_-34px_rgb(20_17_12/0.55)] lg:aspect-[4/5]">
-            <Image
-              src={FOTOS.lucieneEstudio}
-              alt={HERO.retratoAlt}
-              fill
-              priority
-              fetchPriority="high"
-              placeholder="blur"
-              quality={75}
-              sizes="(min-width: 1024px) 34vw, (min-width: 640px) 384px, 92vw"
-              className="object-cover object-[50%_12%] lg:object-[50%_18%]"
-            />
-          </div>
-        </figure>
-
-        <div className="lg:order-1 lg:col-span-7">
+      <div className="container-page relative -mt-20 pb-16 md:mt-0 md:grid md:w-full md:grid-cols-12 md:gap-8 md:pb-20 md:pt-32 lg:pt-36">
+        <div className="hero-texto md:col-span-6 md:col-start-1">
           {/* cartão de visita: o monograma LG dourado, o nome e a OAB */}
           <p className="rise inline-flex max-w-full items-center gap-3 rounded-full border border-gold/35 bg-ink-card py-1.5 pl-1.5 pr-5 shadow-[0_10px_30px_-20px_rgb(164_129_61/0.6)]">
             <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-full border border-gold/50 bg-preto">
@@ -54,14 +54,14 @@ export function Hero() {
           </p>
 
           <p
-            className="rise rotulo-caps mt-6 flex items-start gap-3 text-[0.6875rem] leading-relaxed text-gold-dark sm:items-center sm:text-[0.75rem]"
+            className="rise rotulo-caps mt-6 flex items-start gap-3 text-[0.6875rem] leading-relaxed text-gold-dark sm:text-[0.75rem]"
             style={{ animationDelay: "60ms" }}
           >
-            <span aria-hidden className="traco-desenha mt-[0.55em] h-px w-8 shrink-0 bg-gold sm:mt-0" />
+            <span aria-hidden className="traco-desenha mt-[0.55em] h-px w-8 shrink-0 bg-gold" />
             {HERO.especialidade}
           </p>
 
-          <h1 id="titulo-hero" className="mt-4 text-[clamp(2.6rem,5.6vw,4.6rem)]">
+          <h1 id="titulo-hero" className="mt-4 text-[clamp(2.5rem,4.6vw,4.4rem)]">
             {`${HERO.titulo} `}
             <span className="marca-texto">{HERO.tituloDestaque}</span>
           </h1>
@@ -75,7 +75,7 @@ export function Hero() {
           </p>
 
           <div
-            className="rise mt-9 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4"
+            className="rise mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4"
             style={{ animationDelay: "240ms" }}
           >
             <Button href={whatsapp("hero")} tamanho="lg" seta>

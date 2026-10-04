@@ -18,7 +18,7 @@ export function Frase() {
   return (
     <section
       aria-label={FRASE.poetico}
-      className="tema-escuro relative isolate overflow-hidden bg-ink md:flex md:min-h-[82svh] md:items-end md:py-20"
+      className="tema-escuro expandir relative isolate overflow-hidden bg-ink md:flex md:min-h-[82svh] md:items-end md:py-20"
     >
       <div className="relative aspect-[4/3] w-full md:absolute md:inset-0 md:-z-20 md:aspect-auto">
         <Image

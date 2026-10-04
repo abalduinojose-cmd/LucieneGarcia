@@ -388,24 +388,6 @@
   }
 }
 
-/* Entrada escalonada nas grades: cada item entra um passo depois do outro. */
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    .escalonar > .revelar:nth-child(2) {
-      animation-range: entry 8% entry 63%;
-    }
-    .escalonar > .revelar:nth-child(3) {
-      animation-range: entry 16% entry 71%;
-    }
-    .escalonar > .revelar:nth-child(4) {
-      animation-range: entry 24% entry 79%;
-    }
-    .escalonar > .revelar:nth-child(n + 5) {
-      animation-range: entry 30% entry 85%;
-    }
-  }
-}
-
 /* Pontes: a cor da seção vizinha vaza sobre a foto full-bleed e some. */
 @utility ponte-topo-ink {
   background-image: linear-gradient(to bottom, var(--ink) 0%, transparent 100%);
@@ -497,6 +479,29 @@
   opacity: 0;
 }
 
+/* Retrato do hero: dissolve no creme (máscara, sem véu leitoso). No celular
+   para baixo, no texto; do tablet para cima para a esquerda, onde fica o
+   texto, com um respiro curto no topo, sob o menu, e no pé. Paradas em curva
+   para o degradê não marcar faixa. */
+.hero-foto {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 6%, #000 60%, rgb(0 0 0 / 0.6) 74%, rgb(0 0 0 / 0.22) 88%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 6%, #000 60%, rgb(0 0 0 / 0.6) 74%, rgb(0 0 0 / 0.22) 88%, transparent 100%);
+}
+@media (min-width: 48rem) {
+  .hero-foto {
+    -webkit-mask-image:
+      linear-gradient(to left, #000 0, #000 68%, rgb(0 0 0 / 0.78) 76%, rgb(0 0 0 / 0.42) 86%, rgb(0 0 0 / 0.14) 94%, transparent 100%),
+      linear-gradient(to bottom, transparent 0, #000 9%, #000 86%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(to left, #000 0, #000 68%, rgb(0 0 0 / 0.78) 76%, rgb(0 0 0 / 0.42) 86%, rgb(0 0 0 / 0.14) 94%, transparent 100%),
+      linear-gradient(to bottom, transparent 0, #000 9%, #000 86%, transparent 100%);
+    mask-composite: intersect;
+  }
+}
+
+/* Animações de chegada (no carregamento) e enfeites em loop: só para quem
+   não pediu movimento reduzido. */
 @media (prefers-reduced-motion: no-preference) {
   .wa-pulso {
     animation: wa-pulso 2.8s ease-out infinite;
@@ -525,14 +530,7 @@
   }
 
   @supports (animation-timeline: view()) {
-    /* revelar ao rolar, sem JS */
-    .revelar {
-      animation: rise linear both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 55%;
-    }
-
-    /* fotos full-bleed: parallax enquanto cruzam a tela */
+    /* foto do fechamento: parallax forte, só sem movimento reduzido */
     @keyframes deriva-foto {
       from {
         translate: 0 -4%;
@@ -548,23 +546,191 @@
       animation-timeline: view();
       animation-range: cover 0% cover 100%;
     }
+  }
+}
 
-    /* imagem que se abre como cortina ao entrar em cena */
-    @keyframes cortina {
-      from {
-        clip-path: inset(18% 0 0 0 round 1.75rem);
-        opacity: 0.25;
-      }
-      to {
-        clip-path: inset(0 0 0 0 round 1.75rem);
-        opacity: 1;
-      }
+/* --------------------------------------------------------------------------
+   Rolagem: transições entre as seções, presas ao scroll, sem JS.
+
+   Diferente das animações acima, estas rodam também com "movimento reduzido"
+   ligado: pedido do usuário em 04/10 (a máquina dele tem as animações do
+   Windows desligadas e não via efeito nenhum). Por isso são todas contidas,
+   com opacidade, recorte, desfoque e deslocamentos curtos, e só andam
+   enquanto a pessoa rola: parou de rolar, parou tudo. O parallax forte
+   (deriva-foto) continua só para quem não pediu movimento reduzido.
+   Sem suporte (Firefox), tudo nasce no estado final.
+   -------------------------------------------------------------------------- */
+
+/* barra de progresso no pé do cabeçalho: escondida sem suporte */
+.progresso-rolagem {
+  scale: 0 1;
+  transform-origin: left center;
+}
+
+@supports (animation-timeline: view()) {
+  @keyframes surgir {
+    from {
+      opacity: 0;
+      translate: 0 2rem;
     }
-    .cortina {
-      animation: cortina linear both;
-      animation-timeline: view();
-      animation-range: entry 15% cover 40%;
+    to {
+      opacity: 1;
+      translate: 0 0;
     }
+  }
+  @keyframes surgir-desfoque {
+    from {
+      opacity: 0;
+      translate: 0 0.35em;
+      filter: blur(10px);
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+      filter: blur(0);
+    }
+  }
+  @keyframes estender {
+    from {
+      scale: 0 1;
+    }
+    to {
+      scale: 1 1;
+    }
+  }
+  /* a faixa escura chega como um cartão e se abre até as bordas */
+  @keyframes expandir {
+    from {
+      clip-path: inset(0 5% 0 5% round 2.5rem);
+    }
+    to {
+      clip-path: inset(0 0 0 0 round 0);
+    }
+  }
+  @keyframes relevo-sobe {
+    from {
+      translate: 0 55%;
+    }
+    to {
+      translate: 0 0;
+    }
+  }
+  @keyframes fio-desenha {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+  @keyframes hero-foto-sai {
+    to {
+      translate: 0 12%;
+    }
+  }
+  @keyframes hero-texto-sai {
+    to {
+      translate: 0 -3rem;
+      opacity: 0.1;
+    }
+  }
+  @keyframes progresso {
+    from {
+      scale: 0 1;
+    }
+    to {
+      scale: 1 1;
+    }
+  }
+  /* imagem que se abre como cortina ao entrar em cena */
+  @keyframes cortina {
+    from {
+      clip-path: inset(18% 0 0 0 round 1.75rem);
+      opacity: 0.25;
+    }
+    to {
+      clip-path: inset(0 0 0 0 round 1.75rem);
+      opacity: 1;
+    }
+  }
+
+  /* conteúdo das seções */
+  .revelar {
+    animation: surgir linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 60%;
+  }
+  .escalonar > .revelar:nth-child(2) {
+    animation-range: entry 8% entry 68%;
+  }
+  .escalonar > .revelar:nth-child(3) {
+    animation-range: entry 16% entry 76%;
+  }
+  .escalonar > .revelar:nth-child(4) {
+    animation-range: entry 24% entry 84%;
+  }
+  .escalonar > .revelar:nth-child(n + 5) {
+    animation-range: entry 30% entry 90%;
+  }
+
+  /* títulos: o traço se estende, o título sai do desfoque, o apoio vem depois */
+  .traco-rola {
+    transform-origin: left center;
+    animation: estender linear both;
+    animation-timeline: view();
+    animation-range: entry 10% entry 90%;
+  }
+  .revelar-titulo {
+    animation: surgir-desfoque linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 80%;
+  }
+  .revelar-tarde {
+    animation: surgir linear both;
+    animation-timeline: view();
+    animation-range: entry 20% entry 95%;
+  }
+
+  /* entre as seções */
+  .expandir {
+    animation: expandir linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 40%;
+  }
+  .silhueta-fundo {
+    animation: relevo-sobe linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 50%;
+  }
+  .silhueta-fio {
+    animation: fio-desenha linear both;
+    animation-timeline: view();
+    animation-range: entry 30% cover 65%;
+  }
+  .cortina {
+    animation: cortina linear both;
+    animation-timeline: view();
+    animation-range: entry 15% cover 40%;
+  }
+
+  /* saída do hero: a foto desce mais devagar que a página, o texto sobe e esmaece */
+  .hero-cena {
+    view-timeline: --hero block;
+  }
+  .hero-foto {
+    animation: hero-foto-sai linear both;
+    animation-timeline: --hero;
+    animation-range: exit 0% exit 100%;
+  }
+  .hero-texto {
+    animation: hero-texto-sai linear both;
+    animation-timeline: --hero;
+    animation-range: exit 0% exit 100%;
+  }
+
+  .progresso-rolagem {
+    animation: progresso linear both;
+    animation-timeline: scroll(root block);
   }
 }
 

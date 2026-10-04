@@ -17,7 +17,7 @@ export function Contato() {
     <section
       id={CONTATO_SECAO.id}
       aria-labelledby={TITULO_ID}
-      className="tema-escuro relative isolate flex min-h-[40rem] items-center overflow-hidden py-24 md:min-h-[46rem]"
+      className="tema-escuro expandir relative isolate flex min-h-[40rem] items-center overflow-hidden py-24 md:min-h-[46rem]"
     >
       <Image
         src={FOTOS.cafeJuridico}

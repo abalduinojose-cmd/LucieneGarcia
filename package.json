@@ -10,6 +10,7 @@
     "logo": "python scripts/logo.py",
     "videos": "node scripts/videos.mjs",
     "avatares": "python scripts/avatares.py",
+    "retrato": "python scripts/retrato-largo.py",
     "mapa": "python scripts/mapa.py",
     "build:pages": "node scripts/pages.mjs"
   },
